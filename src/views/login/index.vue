@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container" :style="backdrop">
+  <div class="login-container">
     <section class="form-container">
       <h3 class="title">{{title[systemId]}}</h3>
       <el-form class="card-box login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
@@ -7,10 +7,6 @@
         <el-form-item prop="loginType">
           <el-radio v-model="loginForm.loginType" label="5">登录名</el-radio>
         </el-form-item>
-
-        <!--<el-form-item prop="username" v-show="loginForm.loginType == 2">-->
-          <!--<el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="用户名" />-->
-        <!--</el-form-item>-->
 
         <el-form-item prop="loginName" v-show="loginForm.loginType == 5">
           <el-input name="loginName" type="text" v-model="loginForm.loginName" autoComplete="on" placeholder="登录名" />
@@ -112,7 +108,6 @@ export default {
         this.system = 0
       }
       localStorage.setItem('systemId', this.system)
-      this.backdrop.backgroundImage = 'url(' + this.images[this.system] + ')'
       return this.system
     }
   },
@@ -179,7 +174,6 @@ export default {
 
     input:-webkit-autofill {
       -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
-      /*-webkit-text-fill-color: #fff !important;*/
     }
     input {
       background: transparent;
@@ -265,14 +259,6 @@ export default {
       .el-button--primary{
         background-color: #006AE2;
         border-color: #006AE2;
-      }
-      .el-button--primary:focus,
-      .el-button--primary:hover{
-
-      }
-      .el-button--primary.is-active,
-      .el-button--primary:active{
-
       }
     }
   }
