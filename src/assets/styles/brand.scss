@@ -1,0 +1,40 @@
+/**  */
+.brand,
+.logo {
+  @include transition( $transition-speed $transition-fn);
+  width: 100%;
+  float: left;
+  height: $navbar-height;
+  font-size: 20px;
+  line-height: 50px;
+  text-align: center;
+  font-family: "microsoft yahei", Helvetica, Arial, sans-serif;
+  padding: 0 15px;
+  font-weight: 300;
+  overflow: hidden;
+  //Add support to sidebar mini by allowing the user to create
+  //2 logo designs. mini and lg
+  .brand-lg,
+  .logo-lg {
+    //should be visibile when sidebar isn't collapsed
+    display: block;
+  }
+  .brand-mini,
+  .logo-mini {
+    display: none;
+  }
+  .brand-image,.brand-label,
+  .logo-image,.logo-label{
+    //display: table-cell;
+    vertical-align: middle;
+  }
+  @media (max-width: $screen-sm) {
+    .brand-lg,.brand-mini,.brand-label,
+    .logo-lg,.logo-image,.logo-label {
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+}
+
+

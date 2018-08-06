@@ -1,0 +1,106 @@
+@charset "utf-8";
+///*
+// * Component: Navbar
+// * ----------------------
+// */
+
+.navbar {
+  margin-bottom: 0;
+  border: none;
+  height: $navbar-height;
+  margin-left: $sidebar-width;
+  border-radius: 0;
+  .layout-top-nav & {
+    margin-left: 0;
+  }
+  .navbar-custom-menu,
+  .navbar-right {
+    float: right;
+    @media (max-width: $screen-sm-max) {
+      a {
+        color: inherit;
+        background: transparent;
+      }
+    }
+  }
+  .navbar-static-top{
+    //z-index: 9999;
+  }
+  .navbar-right {
+    @media (max-width: $screen-header-collapse) {
+      float: none;
+      .navbar-collapse & {
+        margin: 7.5px -15px;
+      }
+      > li {
+        color: inherit;
+        border: 0;
+      }
+    }
+  }
+
+  //Navbar toggle button
+  .sidebar-toggle {
+    float: left;
+    background-color: transparent;
+    background-image: none;
+    padding: $navbar-padding-vertical $navbar-padding-horizontal;
+    //Add the fontawesome bars icon
+    font-family: fontAwesome;
+    &:before {
+      content: "\f0c9";
+    }
+    &:hover {
+      color: #fff;
+    }
+    &:focus,
+    &:active {
+      background: transparent;
+    }
+    .icon-bar {
+      display: none;
+    }
+  }
+  .navbar-label{
+    line-height: $navbar-height;
+    text-align: center;
+  }
+}
+.navbar-custom-menu {
+  .#{$uv-css-prefix}-user-menu{
+    padding: 0 12px;
+    transition: all .3s;
+    line-height: $navbar-height;
+    .#{$uv-css-prefix}-menu-btn{
+      background-color: transparent;
+      border-color: transparent;
+      color: transparent;
+      padding: 0;
+      &:active,
+      &.is-active,
+      &:hover,
+      &:focus{
+        outline: none;
+        background-color: transparent;
+        border-color: transparent;
+        color: transparent;
+      }
+    }
+    .#{$uv-css-prefix}-user-menu{
+      padding: 0 12px;
+      .user-image{
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        margin-right: 10px;
+        margin-top: -2px;
+      }
+      > a {
+        display: inline-block;
+        color: #999;
+        line-height: 20px;
+      }
+    }
+  }
+}
+

@@ -1,0 +1,151 @@
+/**  */
+//@import "../mixin/campass";
+$logo-color: #EAEBEB;
+$logo-background-color: #222c32;
+$logo-background-color-hover: #1E2C34;
+$logo-box-shadow-color: #0b161c;
+
+$navbar-background-color: #fff;
+$navbar-box-shadow-color:rgba(11, 22, 28, 0.1);
+$sidebar-toggle-color: #1F2C34;
+$navbar-anchor-color: #999;
+$navbar-anchor-color-focus: #333;
+
+// sidebar variable
+$sidebar-background-color: #222d32;
+$title-color: #b8c7ce;
+$submenu-background-color: #2c3b41;
+$submenu-deep-background-color: rgb(38, 54, 60);
+$hover-menu__color: #fff;
+$hover-menu__background-color: #1e282c;
+$hover-menu__border-left-color: #3c8dbc;
+$hover-item__background-color: transparent;
+
+.skin-utopa{
+  .main-sidebar{
+    .brand,
+    .logo{
+      font-size: 18px;
+      color: $logo-color;
+      //background-color: #1E2C34;
+      //border-bottom: 2px solid #1C272D;
+      background-color: $logo-background-color;
+      //box-shadow: 0 2px 20px 0 $logo-box-shadow-color;
+      box-shadow: 0 0.5px 0 0 $logo-box-shadow-color
+    }
+    .brand:hover,
+    .logo:hover{
+      background-color: $logo-background-color-hover;
+    }
+  }
+  .main-sidebar,
+  .left-side {
+    background-color: $sidebar-background-color;
+  }
+
+  .main-content{
+    .navbar{
+      //background-color: $navbar-background-color;
+      //@include box-shadow(0 -3px 8px 0 rgba(0, 0, 0, 0.44))
+      //@include box-shadow(0 2px 20px 0 $navbar-box-shadow-color);
+      // background-color: #ecf0f5;
+      background-color: #fff;
+    }
+    .navbar .sidebar-toggle{
+      color: $sidebar-toggle-color;
+      transition: all .3s;
+    }
+    .navbar .sidebar-toggle:hover{
+      color:darken($sidebar-toggle-color, 70%);
+      background-color: transparent;
+    }
+    .navbar .nav>li>a{
+      color: $navbar-anchor-color;
+    }
+    .navbar .nav>li>a:hover,
+    .navbar .nav>li>a:active,
+    .navbar .nav>li>a:focus,
+    .navbar .nav .open>a,
+    .navbar .nav .open>a:hover,
+    .navbar .nav .open>a:focus,
+    .navbar .nav>.active>a{
+      color: $navbar-anchor-color-focus;
+    }
+  }
+
+  .el-menu{
+    position: static;
+    border-radius: 0;
+    border-right-width: 0;
+    background-color: transparent;
+  }
+  .el-menu--vertical{
+    .el-menu{
+      background-color:$submenu-deep-background-color
+    }
+  }
+  .el-menu .el-submenu__title:hover,
+  .el-menu .el-menu-item:hover,
+  .el-menu .el-menu-item.single-item.is-active,
+  .el-submenu.is-opened.is-active > .el-submenu__title{
+    color: $hover-menu__color;
+    background: $hover-menu__background-color;
+    border-left-color: $hover-menu__border-left-color;
+  }
+  .el-menu-item.is-active{
+    color: $white;
+    background-color: rgba(0,0,0,.3);
+  }
+  .el-menu-item, .el-submenu__title {
+    color: $title-color;
+    border-left: 3px solid transparent;
+
+    i.fa,
+    .image{
+      margin-top: 2px;
+    }
+    i.fa{
+      width: 20px;
+    }
+    .label + .label{
+      margin-right: 2px;
+    }
+  }
+  // padding of menu item {level 1}
+  .el-menu-item, .el-submenu__title{
+  }
+  // padding of submenu item {level 2/3/4...}
+  .el-submenu .el-menu .el-menu-item{
+  }
+  .el-submenu .el-menu-item:hover, .el-submenu__title:hover{
+    background-color: $hover-item__background-color;
+  }
+  // submenu
+  .el-submenu{
+    .el-menu{
+      background-color: $submenu-background-color;
+    }
+    .el-menu-item{
+      display: block;
+      line-height: 1.4;
+      height: auto;
+      // padding: 5px 5px 5px 15px;
+      transition: none;
+    }
+    .el-menu-item:hover,
+    .el-submenu .el-menu-item:hover,
+    .el-submenu .el-submenu__title:hover,
+    .el-submenu.is-opened .el-submenu__title{
+      border-left-color: transparent;
+    }
+    .el-menu-item:hover,
+    .el-submenu .el-menu-item:hover{
+      color: $white;
+    }
+    // submenu title style
+    .el-submenu.is-opened .el-submenu__title,
+    .el-submenu .el-submenu__title:hover{
+      background-color: $submenu-deep-background-color;
+    }
+  }
+}

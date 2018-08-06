@@ -1,0 +1,116 @@
+/**  */
+@import "mixins";
+@import "_variables";
+@import "colors";
+@import "variable";
+
+@import "normalize";
+@import "element-ui/index";
+@import "theme/dark";
+@import "core";
+
+.site-wrapper {
+  @include clearfix;
+  //height: 100%;
+  position: relative;
+  //overflow-x: hidden;
+  //overflow-y: auto;
+  overflow: hidden;
+
+  .el-menu.sidebar-menu{
+    width: $sidebar-width;
+    @media (max-device-width: 640px) and (max-width: 640px) {
+      width: $sidebar-mobile-width;
+    }
+  }
+}
+
+/*
+ * brand - contains the logo and brand
+ */
+@import "brand";
+
+/*
+ * sidebar - contains the menu
+ */
+@import "sidebar";
+
+/*
+ * navbar - contains the user info
+ */
+@import "navbar";
+
+/*
+ * Content Wrapper - contains the main content
+ */
+.main-content,
+.content-wrapper > .content {
+  //min-height: 250px;
+  overflow: hidden;
+  @include container-fixed($grid-gutter-width);
+}
+
+.app-main{
+  //padding-top: $navbar-height;
+  margin-left: $sidebar-width + $main-margin-left;
+  @media (max-device-width: 640px) and (max-width: 640px) {
+    margin-left: $sidebar-mobile-width;
+  }
+  .app-container{
+    padding: 10px;
+  }
+}
+
+/*
+ * toggle controller - switch the sidebar status
+ */
+.sidebar-collapse {
+  .brand .brand-label,
+  .el-menu-item-title{
+    display: none;
+  }
+  .navbar{
+    margin-left: $sidebar-contarct-width;
+  }
+  .menu-wrapper.reactive .el-menu-item-title{
+    display: inherit;
+  }
+  .main-sidebar,
+  .el-menu.sidebar-menu{
+    width: $sidebar-contarct-width;
+    @media (max-device-width: 640px) and (max-width: 640px) {
+      width: $sidebar-mobile-width;
+    }
+  }
+  .sidebar{
+    width: $sidebar-contarct-width + 20;
+    @media (max-device-width: 640px) and (max-width: 640px) {
+      width: $sidebar-mobile-width;
+    }
+  }
+  .app-main {
+    margin-left: $sidebar-contarct-width + $main-margin-left;
+    @media (max-device-width: 640px) and (max-width: 640px) {
+      margin-left: $sidebar-mobile-width;
+    }
+  }
+}
+
+/*
+ * fixed layout
+ */
+.fixed{
+  .main-sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+}
+.brand,
+.main-sidebar,
+.el-menu.sidebar-menu,
+.sidebar,
+.navbar,
+.app-main{
+  @include transition(margin-left $transition-speed $transition-fn, width $transition-speed $transition-fn);
+}
