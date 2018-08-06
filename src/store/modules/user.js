@@ -18,22 +18,22 @@ const user = {
     userInfo: null
   },
   mutations: {
-    [SET_TOKEN] (state, token) => {
+    [SET_TOKEN] (state, token) {
       state.token = token
     },
-    [SET_UID] (state, uid) => {
+    [SET_UID] (state, uid) {
       state.uid = uid
     },
-    [SET_INTRODUCTION] (state, introduction) => {
+    [SET_INTRODUCTION] (state, introduction) {
       state.introduction = introduction
     },
-    [SET_NAME] (state, name) => {
+    [SET_NAME] (state, name) {
       state.name = name
     },
-    [SET_AVATAR] (state, avatar) => {
+    [SET_AVATAR] (state, avatar) {
       state.avatar = avatar
     },
-    [SET_USER_INFO] (state, userInfo) => {
+    [SET_USER_INFO] (state, userInfo) {
       state.userInfo = userInfo
     }
   },

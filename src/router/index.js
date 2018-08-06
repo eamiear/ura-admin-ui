@@ -20,7 +20,7 @@ router.beforeEach((to, from, next) => {
   if (Storage.get('token') && Storage.get('uid')) { // 1.0. 是否已经完成登录
     to.path === '/login' ? next({path: '/'}) : next()
   } else {
-    to.path.includes('/login') ? next() : next({path: '/login'}})
+    to.path.includes('/login') ? next() : next({path: '/login'})
     NProgress.done()
   }
 })

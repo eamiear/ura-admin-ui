@@ -61,24 +61,24 @@ const tab = {
       },
       closeOtherTabsNavList ({commit, state}, tabActiveName) {
         return new Promise((resolve) => {
-          commit('CLOSE_OTHER_TABS_NAV_LIST', tabActiveNam})
+          commit('CLOSE_OTHER_TABS_NAV_LIST', tabActiveName)
           resolve([...state.tabsNavList])
         })
       },
-      closeLeftTabsNavList ({commit, state}, tabActiveNam) {
+      closeLeftTabsNavList ({commit, state}, tabActiveName) {
         return new Promise((resolve) => {
-          commit('CLOSE_LEFT_TABS_NAV_LIST', tabActiveNam)
+          commit('CLOSE_LEFT_TABS_NAV_LIST', tabActiveName)
           resolve([...state.tabsNavList])
         })
       },
-      closeRightTabsNavList ({commit, state}, tabActiveNam) {
+      closeRightTabsNavList ({commit, state}, tabActiveName) {
         return new Promise((resolve) => {
-          commit('CLOSE_RIGHT_TABS_NAV_LIST', tabActiveNam)
+          commit('CLOSE_RIGHT_TABS_NAV_LIST', tabActiveName)
           resolve([...state.tabsNavList])
         })
       },
-      updateTabsActiveName ({commit}, tabActiveNam) {
-        commit('UPDATE_TABS_ACTIVE_NAME', tabActiveNam)
+      updateTabsActiveName ({commit}, tabActiveName) {
+        commit('UPDATE_TABS_ACTIVE_NAME', tabActiveName)
       }
   }
 }
