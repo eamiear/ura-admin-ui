@@ -6,13 +6,13 @@ const menu = {
     permissions: []
   },
   mutations: {
-    [SET_MENU_NAV_LIST] (state, {menuNavList}) {
+    [SET_MENU_NAV_LIST] (state, menuNavList) {
       state.menuNavList = menuNavList
     },
-    [SET_PERMISSIONS] (state, {permissions}) {
+    [SET_PERMISSIONS] (state, permissions) {
       state.permissions = permissions
     },
-    [UPDATE_MENU_NAV_ACTIVE_NAME] (state, {menuNavActiveName}) {
+    [UPDATE_MENU_NAV_ACTIVE_NAME] (state, menuNavActiveName) {
       state.menuNavActiveName = menuNavActiveName
     }
   },
@@ -22,8 +22,8 @@ const menu = {
 
       });
     },
-    updateMenuNavActiveName ({commit}, {activeName}) {
-      commit('UPDATE_MENU_NAV_ACTIVE_NAME', {activeName})
+    updateMenuNavActiveName ({commit}, activeName) {
+      commit('UPDATE_MENU_NAV_ACTIVE_NAME', activeName)
     }
   }
 }

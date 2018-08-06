@@ -16,28 +16,28 @@ const tab = {
     tabsNavList: []
   },
   mutations: {
-    [UPDATE_TABS_ACTIVE_NAME] (state, {tabsActiveName}) {
+    [UPDATE_TABS_ACTIVE_NAME] (state, tabsActiveName) {
       state.tabsActiveName = tabsActiveName
     },
     [CLEAR_TABS_NAV_LIST] (state) {
       state.tabsNavList = state.tabsNavList.filter(tab => tab.name === HOME_DASHBOARD)
     },
-    [ADD_TABS_NAV_LIST] (state, {tab}) {
+    [ADD_TABS_NAV_LIST] (state, tab) {
       state.tabsNavList.push(tab)
     },
-    [DEL_TABS_NAV_LIST] (state, {tabName}) {
+    [DEL_TABS_NAV_LIST] (state, tabName) {
       if (tabName === HOME_DASHBOARD) return
       state.tabsNavList = state.tabsNavList.filter(tab => tab.name !== tabName)
     },
-    [CLOSE_OTHER_TABS_NAV_LIST] (state, {tabActiveName}) {
+    [CLOSE_OTHER_TABS_NAV_LIST] (state, tabActiveName) {
       state.tabsNavList = state.tabsNavList.filter(tab => tab.name === tabActiveName || tab.name === HOME_DASHBOARD)
     },
-    [CLOSE_LEFT_TABS_NAV_LIST] (state, {tabActiveName}) {
+    [CLOSE_LEFT_TABS_NAV_LIST] (state, tabActiveName) {
       if (!tabActiveName) return
       const index = state.tabsNavList.findIndex(v => v.name === tabActiveName)
       state.tabsNavList.splice(1, index - 1)
     },
-    [CLOSE_RIGHT_TABS_NAV_LIST] (state, {tabsActiveName}) {
+    [CLOSE_RIGHT_TABS_NAV_LIST] (state, tabsActiveName) {
       if (!tabActiveName) return
       const index = state.tabsNavList.findIndex(v => v.name === tabActiveName)
       state.tabsNavList.splice(index + 1, state.tabsNavList.length)
@@ -53,32 +53,32 @@ const tab = {
       clearTabsNavList ({commit}) {
         commit('CLEAR_TABS_NAV_LIST')
       },
-      delTabsNavList ({commit, state}, {tabActiveName}) {
+      delTabsNavList ({commit, state}, tabActiveName) {
         return new Promise((resolve) => {
-          commit('DEL_TABS_NAV_LIST', {tabActiveName})
+          commit('DEL_TABS_NAV_LIST', tabActiveName)
           resolve([...state.tabsNavList])
         })
       },
-      closeOtherTabsNavList ({commit, state}, {tabActiveName}) {
+      closeOtherTabsNavList ({commit, state}, tabActiveName) {
         return new Promise((resolve) => {
-          commit('CLOSE_OTHER_TABS_NAV_LIST', {tabActiveName})
+          commit('CLOSE_OTHER_TABS_NAV_LIST', tabActiveNam})
           resolve([...state.tabsNavList])
         })
       },
-      closeLeftTabsNavList ({commit, state}, {tabActiveName}) {
+      closeLeftTabsNavList ({commit, state}, tabActiveNam) {
         return new Promise((resolve) => {
-          commit('CLOSE_LEFT_TABS_NAV_LIST', {tabActiveName})
+          commit('CLOSE_LEFT_TABS_NAV_LIST', tabActiveNam)
           resolve([...state.tabsNavList])
         })
       },
-      closeRightTabsNavList ({commit, state}, {tabActiveName}) {
+      closeRightTabsNavList ({commit, state}, tabActiveNam) {
         return new Promise((resolve) => {
-          commit('CLOSE_RIGHT_TABS_NAV_LIST', {tabActiveName})
+          commit('CLOSE_RIGHT_TABS_NAV_LIST', tabActiveNam)
           resolve([...state.tabsNavList])
         })
       },
-      updateTabsActiveName ({commit}, {activeName}) {
-        commit('UPDATE_TABS_ACTIVE_NAME', {activeName})
+      updateTabsActiveName ({commit}, tabActiveNam) {
+        commit('UPDATE_TABS_ACTIVE_NAME', tabActiveNam)
       }
   }
 }
