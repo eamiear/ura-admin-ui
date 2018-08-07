@@ -3,12 +3,12 @@
     v-if="menus.isShow && menus.children && menus.children.length > 0"
     :index="menus.id + ''">
     <template slot="title">
-      <img v-if="menus.image" :src="menus.image"/>
-      <i v-else-if='menus.icon' :class="'fa fa-' + menus.icon"></i>
+      <v-image v-if="menus.image" :source="menus.image"></v-image>
+      <icon v-else-if='menus.icon' :name="menus.icon"></icon>
       <span slot="title" class="el-menu-item-title">{{menus.name}}</span>
       <template v-if="menus.labels && menus.labels.length > 0">
         <span class="pull-right-container pull-right" style="margin-right: 30px;">
-          <small v-for="(label,key) in menus.labels" :key="key" class="label pull-right" :class="label.classes">{{label.text}}</small>
+          <small v-for="label in menus.labels" class="label pull-right" :class="label.classes">{{label.text}}</small>
         </span>
       </template>
     </template>
@@ -18,16 +18,16 @@
       :menus="item"></sub-menu-nav>
   </el-submenu>
   <el-menu-item
-    :index="menus.path"
-    :route="menus"
+    :index="menus.id + ''"
     class='single-item'
-    v-else-if="menus.isShow && (!menus.children || (menus.children && menus.children.length === 0))">
-    <img v-if="menus.image" :src="menus.image"/>
-    <i v-else-if='menus.icon' :class="'fa fa-' + menus.icon"></i>
+    v-else-if="menus.isShow && (!menus.children || (menus.children && menus.children.length === 0))"
+    @click="routerHandler(menus.path, $route)">
+    <v-image v-if="menus.image" :source="menus.image" />
+    <icon v-else-if='menus.icon' :name="menus.icon"></icon>
     <span slot="title" class="el-menu-item-title">{{menus.name}}</span>
     <template v-if="menus.labels && menus.labels.length > 0">
       <span class="pull-right-container">
-        <small v-for="(label,key) in menus.labels" :key="key" class="label pull-right" :class="label.classes">{{label.text}}</small>
+        <small v-for="label in menus.labels" class="label pull-right" :class="label.classes">{{label.text}}</small>
       </span>
     </template>
   </el-menu-item>
@@ -44,7 +44,14 @@ export default {
   computed: {
   },
   methods: {
-
+    routerHandler (path, preRoute) {
+      const routeName = path
+      if (/\S/.test(routeName)) {
+        this.$router.push({name: routeName, query: {s: Date.now()}, params: {s: Date.now()}}, (to) => {
+          to.matched && to.matched.length === 0 && this.$router.push({path: '/404'})
+        })
+      }
+    }
   }
 }
 </script>

@@ -5,10 +5,10 @@
       mode="vertical"
       unique-opened
       :router="true"
-      :default-active="$route.path"
+      :default-active="menuNavActiveName"
       :collapse="isMenuCollapse">
       <sub-menu-nav
-        v-for="menu in sidebar_menus"
+        v-for="menu in sidebarMenus"
         :key="menu.id"
         :menus='menu'>
       </sub-menu-nav>
@@ -18,26 +18,26 @@
 
 <script>
 import SubMenuNav from './SubMenuNav.vue'
-import {routes} from '@/router'
+import {mapGetters} from 'vuex'
 export default {
   data () {
     return {
-      sidebar_menus: routes,
       maxWidth: 230
     }
   },
   components: { SubMenuNav },
   computed: {
-    isMenuCollapse () {
-      return false
-    },
+    ...mapGetters([
+      'sidebarMenus',
+      'isMenuCollapse': sidebarCollapse,
+      'tabsNavList'
+    ]),
     menuNavActiveName: {
       get () {
-        // return this.$store.state.menu.menuNavActiveName
-        return ''
+        return this.$store.state.menu.menuNavActiveName
       },
       set (name) {
-        // this.$store.dispatch('updateMenuNavActiveName', name)
+        this.$store.dispatch('updateMenuNavActiveName', name)
       }
     }
   },
@@ -45,33 +45,37 @@ export default {
     $route: 'routerHandler'
   },
   created () {
-    // this.routerHandler(this.$route)
+    this.$store.dispatch('generatorSidebarMenu').then(() => {
+      this.routerHandler(this.$route)
+    })
   },
   mounted () {
-
   },
   methods: {
     routerHandler (route) {
+      if (hasPermission(route.name, this.sidebarMenus)) {
+        return this.$router.push({path: '/401'})
+      }
       if (route.meta && route.meta.isTab) {
-        // let tab = this.$store.state.tab.tabsNavList.filter(tab => tab.name === route.name)[0]
-        // if (isEmpty(tab)) {
-        //   const menuNav = this.getMenuNavByRouteName(route.name, this.sidebar_menus)
-        //   if (!isEmpty(menuNav)) {
-        //     tab = {
-        //       id: menuNav.id,
-        //       name: route.name,
-        //       title: menuNav.name,
-        //       type: route.meta.type,
-        //       path: menuNav.path,
-        //       query: route.query
-        //     }
-        //     this.$store.dispatch('addTabsNavList', tab)
-        //   } else {
-        //     // return console.error('没有可用tab标签页!')
-        //   }
-        // }
-        // this.menuNavActiveName = `${tab.id}`
-        // this.$store.dispatch('updateTabsActiveName', `${route.name}`)
+        let tab = this.tabsNavList.filter(tab => tab.name === route.name)[0]
+        if (isEmpty(tab)) {
+          const menuNav = this.getMenuNavByRouteName(route.name, this.sidebarMenus)
+          if (!isEmpty(menuNav)) {
+            tab = {
+              id: menuNav.id,
+              name: route.name,
+              title: menuNav.name,
+              type: route.meta.type,
+              path: menuNav.path,
+              query: route.query
+            }
+            this.$store.dispatch('addTabsNavList', tab)
+          } else {
+            // return console.error('没有可用tab标签页!')
+          }
+        }
+        this.menuNavActiveName = `${tab.id}`
+        this.$store.dispatch('updateTabsActiveName', `${route.name}`)
       }
     },
     getMenuNavByRouteName (routeName, menuNavList) {

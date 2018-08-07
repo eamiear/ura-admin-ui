@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import isEmpty from 'lodash/isEmpty'
 export default {
   name: 'TabsView',
@@ -63,21 +64,23 @@ export default {
   mounted () {
   },
   computed: {
+    ...mapGetters([
+      'documentClientHeight',
+      'tabsNavList',
+      'tabsActiveName'
+    ]),
     tabActiveName: {
       get () {
-        return this.$store.state.tab.tabsActiveName
+        return this.tabsActiveName
       },
       set (name) {
         this.$store.dispatch('updateTabsActiveName', name)
       }
-    },
-    tabsNavList () {
-      return this.$store.state.tab.tabsNavList
     }
   },
   methods: {
     contentViewStyles (tab) {
-      let height = this.$store.state.app.documentClientHeight
+      let height = this.documentClientHeight
       height -= 50 // content-wrapper：navbar
       height -= 50 // content-wrapper：el-tabs__header
       height += 'px'
@@ -113,14 +116,14 @@ export default {
         }
       })
     },
-    closeTabsLeft (v) {
-      this.$store.dispatch('closeLeftTabsNavList', v || this.tabActiveName)
+    closeTabsLeft (v = this.tabActiveName) {
+      this.$store.dispatch('closeLeftTabsNavList', v)
     },
-    closeTabsRight (v) {
-      this.$store.dispatch('closeRightTabsNavList', v || this.tabActiveName)
+    closeTabsRight (v = this.tabActiveName) {
+      this.$store.dispatch('closeRightTabsNavList', v)
     },
-    closeTabsOther (v) {
-      this.$store.dispatch('closeOtherTabsNavList', v || this.tabActiveName)
+    closeTabsOther (v = this.tabActiveName) {
+      this.$store.dispatch('closeOtherTabsNavList', v)
     },
     refreshTabsActive () {
       const tempTabName = this.tabActiveName
