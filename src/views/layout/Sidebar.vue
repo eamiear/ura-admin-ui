@@ -19,7 +19,8 @@
 <script>
 import SubMenuNav from './SubMenuNav.vue'
 import {mapGetters} from 'vuex'
-import {isEmpty} from 'lodash.isEmpty'
+import isEmpty from 'lodash/isEmpty'
+import {hasPermission} from '@/common'
 export default {
   data () {
     return {

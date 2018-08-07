@@ -6,6 +6,7 @@ import {
   SET_AVATAR,
   SET_USER_INFO
 } from '../mutation-types'
+import UserAPI from '@/api/user'
 
 const user = {
   state: {
@@ -40,56 +41,56 @@ const user = {
   actions: {
     loginByUsername ({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
-        // loginByUsername(userInfo.username.trim(), userInfo.password).then(({data}) => {
-        //   const loginRes = data.data
-        //   if (data.code === 0) {
-        //     const accessToken = loginRes.accessToken
-        //     const uid = loginRes.uid
-        //     Storage.set('token', accessToken)
-        //     Storage.set('uid', uid)
-        //     commit('SET_TOKEN', accessToken)
-        //     commit('SET_UID', uid)
-        //   }
-        //   resolve({data})
-        // }).catch(error => {
-        //   reject(error)
-        // })
+        UserAPI.loginByUsername(userInfo.username.trim(), userInfo.password).then(({data}) => {
+          const loginRes = data.data
+          if (data.code === 0) {
+            const accessToken = loginRes.accessToken
+            const uid = loginRes.uid
+            Storage.set('token', accessToken)
+            Storage.set('uid', uid)
+            commit('SET_TOKEN', accessToken)
+            commit('SET_UID', uid)
+          }
+          resolve({data})
+        }).catch(error => {
+          reject(error)
+        })
       })
     },
 
     // 获取用户信息
     getUserInfo ({ commit, state }) {
       return new Promise((resolve, reject) => {
-        // getUserInfo(state.uid, state.token).then(({data}) => {
-        //   const userData = data.data
-        //   if (data.code === 0) {
-        //     commit('SET_USER_INFO', userData)
-        //     commit('SET_NAME', userData.userName || userData.nickname)
-        //     commit('SET_AVATAR', userData.portrait)
-        //     commit('SET_INTRODUCTION', userData.introduction)
-        //   } else {
-        //     console.log(data)
-        //   }
-        //   resolve({data})
-        // }).catch(error => {
-        //   reject(error)
-        // })
+        UserAPI.getUserInfo(state.uid, state.token).then(({data}) => {
+          const userData = data.data
+          if (data.code === 0) {
+            commit('SET_USER_INFO', userData)
+            commit('SET_NAME', userData.userName || userData.nickname)
+            commit('SET_AVATAR', userData.portrait)
+            commit('SET_INTRODUCTION', userData.introduction)
+          } else {
+            console.log(data)
+          }
+          resolve({data})
+        }).catch(error => {
+          reject(error)
+        })
       })
     },
 
     // 登出
     logOut ({ commit, state }) {
       return new Promise((resolve, reject) => {
-        // logout(state.token).then(() => {
-        //   commit('SET_TOKEN', '')
-        //   commit('SET_UID', '')
-        //   commit('SET_USER_INFO', null)
-        //   Storage.remove('token')
-        //   Storage.remove('uid')
-        //   resolve()
-        // }).catch(error => {
-        //   reject(error)
-        // })
+        UserAPI.logout(state.token).then(() => {
+          commit('SET_TOKEN', '')
+          commit('SET_UID', '')
+          commit('SET_USER_INFO', null)
+          Storage.remove('token')
+          Storage.remove('uid')
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
       })
     },
 

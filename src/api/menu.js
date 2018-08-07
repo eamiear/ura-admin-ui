@@ -1,9 +1,9 @@
 import service from '@/common/fetch'
-import Common from '@/common'
+import {getRequestUrl} from '@/common'
 
-const API = {
+const SysMenuAPI = {
   getSysMenuList (params) {
-    return service.get(Common.getRequestUrl('/sys/menu/list'), {params})
+    return service.get(getRequestUrl('/sys/menu/list'), {params})
   }
 }
-export default API
+export default SysMenuAPI
