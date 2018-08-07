@@ -3,10 +3,9 @@ import VueRouter from 'vue-router'
 import NProgress from 'nprogress' // Progress 进度条
 import 'nprogress/nprogress.css'// Progress 进度条样式
 import Storage from '@/common/cache' // 验权
+import menuRouters from './modules'
 
 Vue.use(VueRouter)
-
-import menuRouters from './modules'
 
 const router = new VueRouter({
   mode: 'hash',

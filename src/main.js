@@ -8,7 +8,7 @@ import ElementUI from 'element-ui'
 import '@/assets/styles/index.scss'
 Vue.use(ElementUI)
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
@@ -17,4 +17,4 @@ new Vue({
   router,
   components: { App },
   template: '<App/>'
-});
+})

@@ -8,7 +8,7 @@
       <span slot="title" class="el-menu-item-title">{{menus.name}}</span>
       <template v-if="menus.labels && menus.labels.length > 0">
         <span class="pull-right-container pull-right" style="margin-right: 30px;">
-          <small v-for="label in menus.labels" class="label pull-right" :class="label.classes">{{label.text}}</small>
+          <small v-for="(label, labelIndex) in menus.labels" :key="labelIndex" class="label pull-right" :class="label.classes">{{label.text}}</small>
         </span>
       </template>
     </template>
@@ -27,7 +27,7 @@
     <span slot="title" class="el-menu-item-title">{{menus.name}}</span>
     <template v-if="menus.labels && menus.labels.length > 0">
       <span class="pull-right-container">
-        <small v-for="label in menus.labels" class="label pull-right" :class="label.classes">{{label.text}}</small>
+        <small v-for="(label, labelIndex) in menus.labels" :key="labelIndex" class="label pull-right" :class="label.classes">{{label.text}}</small>
       </span>
     </template>
   </el-menu-item>

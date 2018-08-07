@@ -37,7 +37,7 @@ const tab = {
       const index = state.tabsNavList.findIndex(v => v.name === tabActiveName)
       state.tabsNavList.splice(1, index - 1)
     },
-    [CLOSE_RIGHT_TABS_NAV_LIST] (state, tabsActiveName) {
+    [CLOSE_RIGHT_TABS_NAV_LIST] (state, tabActiveName) {
       if (!tabActiveName) return
       const index = state.tabsNavList.findIndex(v => v.name === tabActiveName)
       state.tabsNavList.splice(index + 1, state.tabsNavList.length)

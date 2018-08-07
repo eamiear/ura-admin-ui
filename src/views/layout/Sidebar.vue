@@ -6,7 +6,7 @@
       unique-opened
       :router="true"
       :default-active="menuNavActiveName"
-      :collapse="isMenuCollapse">
+      :collapse="sidebarCollapse">
       <sub-menu-nav
         v-for="menu in sidebarMenus"
         :key="menu.id"
@@ -19,6 +19,7 @@
 <script>
 import SubMenuNav from './SubMenuNav.vue'
 import {mapGetters} from 'vuex'
+import {isEmpty} from 'lodash.isEmpty'
 export default {
   data () {
     return {
@@ -29,7 +30,7 @@ export default {
   computed: {
     ...mapGetters([
       'sidebarMenus',
-      'isMenuCollapse': sidebarCollapse,
+      'sidebarCollapse',
       'tabsNavList'
     ]),
     menuNavActiveName: {

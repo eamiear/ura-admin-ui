@@ -5,7 +5,7 @@
       v-model="tabActiveName"
       @tab-click="selectedTabHandler">
       <el-tab-pane
-        v-for="(tab, index) in tabsNavList"
+        v-for="(tab) in tabsNavList"
         :key="tab.name"
         :name="tab.name">
         <el-tag

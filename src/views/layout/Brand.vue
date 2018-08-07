@@ -14,10 +14,10 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'isMenuCollapse': sidebarCollapse
+      'sidebarCollapse'
     ]),
     styleObject () {
-      return {display: this.isMenuCollapse ? 'none' : ''}
+      return {display: this.sidebarCollapse ? 'none' : ''}
     }
   },
   methods: {}

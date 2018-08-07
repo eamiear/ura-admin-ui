@@ -20,7 +20,7 @@ const menu = {
     generateSidebarMenus ({commit}) {
       return new Promise(function(resolve, reject) {
 
-      });
+      })
     },
     updateMenuNavActiveName ({commit}, activeName) {
       commit('UPDATE_MENU_NAV_ACTIVE_NAME', activeName)

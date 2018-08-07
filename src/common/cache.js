@@ -56,45 +56,6 @@ const storageMap = {
   }
 }
 
-/* token*/
-export function getToken () {
-  return Cacher.get(USER_TOKEN_KEY)
-}
-
-export function setToken (token) {
-  return Cacher.set(USER_TOKEN_KEY, token)
-}
-
-export function removeToken () {
-  return Cacher.remove(USER_TOKEN_KEY)
-}
-
-/* user id*/
-export function getUID () {
-  return Cacher.get(USER_ID_KEY)
-}
-
-export function setUID (uid) {
-  return Cacher.set(USER_ID_KEY, uid)
-}
-
-export function removeUID () {
-  return Cacher.remove(USER_ID_KEY)
-}
-
-/* auth*/
-export function getAuthorityInfo () {
-  return Cacher.get(AUTHORITY_KEY)
-}
-
-export function setAuthorityInfo (authInfo) {
-  return Cacher.set(AUTHORITY_KEY, authInfo)
-}
-
-export function removeAuthorityInfo () {
-  return Cacher.remove(AUTHORITY_KEY)
-}
-
 const Storage = {
   set (key, value) {
     storageMap[`set-${key}`].call(this, value)

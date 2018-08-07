@@ -45,13 +45,6 @@ export default {
         callback()
       }
     }
-    const validateLoginName = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('请输入正确的登录名'))
-      } else {
-        callback()
-      }
-    }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
         callback(new Error('密码不能小于6位'))
@@ -82,14 +75,13 @@ export default {
       this.pwdType = this.pwdType === 'password' ? 'text' : 'password'
     },
     getCaptcha () {
-      const _this = this
+      // const _this = this
       // verificationService.fetchVerifyCode().then(response => {
       //   const result = response.data.data
       //   _this.verifyCodeImage = result.verifyImage
       // })
     },
     handleLogin () {
-      const _this = this
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
@@ -106,6 +98,7 @@ export default {
               this.$router.push({path: '/'})
             }
           }).catch((err) => {
+            console.error(err)
             this.loading = false
           })
         } else {
@@ -118,7 +111,6 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-  @import "~compass-mixins";
   $bg:#2d3a4b;
   $dark_gray:#889aa4;
   $light_gray:#eee;
@@ -163,7 +155,7 @@ export default {
       background-color: #fff;
       padding: 60px 48px 46px;
       border-radius: 3px;
-      @include box-shadow(0 16px 59px 0 rgba(14,102,164,0.46));
+      // @include box-shadow(0 16px 59px 0 rgba(14,102,164,0.46));
 
       .el-form-item {
         width: 320px;

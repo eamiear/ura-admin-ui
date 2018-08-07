@@ -9,7 +9,7 @@
 
 import _import from '@/router/import'
 
-/* 权限管理*/
+/* 权限管理 */
 const permission = [
   {
     'name': '/system/permission/permissionMgr.html',
@@ -26,7 +26,7 @@ const permission = [
   }
 ]
 
-/* 业务事件*/
+/* 业务事件 */
 const bizevent = [
   {
     'name': '/system/bizevent/bizeventList.html',
@@ -49,7 +49,7 @@ const bizevent = [
   }
 ]
 
-/* 优惠券*/
+/* 优惠券 */
 const coupon = [
   {
     'name': '/system/coupon/batch.html',
