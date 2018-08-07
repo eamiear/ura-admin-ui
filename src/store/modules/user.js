@@ -50,7 +50,7 @@ const user = {
             commit('SET_TOKEN', accessToken)
             commit('SET_UID', uid)
           }
-          resolve(result)
+          resolve({data})
         }).catch(error => {
           reject(error)
         })
@@ -70,7 +70,7 @@ const user = {
           } else {
             console.log(data)
           }
-          resolve(data)
+          resolve({data})
         }).catch(error => {
           reject(error)
         })
