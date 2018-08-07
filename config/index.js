@@ -4,8 +4,17 @@
 
 const path = require('path')
 const devEnv = require('./dev.env')
+const testEnv = require('./test.env')
+const prodEnv = require('./prod.env')
+const predEnv = require('./pred.env')
 
 module.exports = {
+  envTable: {
+    'production': prodEnv,
+    'dev': devEnv,
+    'testing': testEnv,
+    'pred': predEnv
+  },
   dev: {
 
     // Paths
