@@ -25,7 +25,7 @@
           <span class='captcha-code'><img @click="getCaptcha()" :src="capchatSource" /></span>
         </el-form-item>
 
-        <el-button type="primary" style="width: 320px;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">登录</el-button>
+        <el-button type="primary" class="login-btn" :loading="loading" @click.native.prevent="handleLogin">登录</el-button>
       </el-form>
     </section>
   </div>
@@ -136,15 +136,15 @@ export default {
 
     .form-container{
       position: absolute;
-      left: 0;
-      right: 0;
-      margin: 8% auto;
-      width: 400px;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      min-width: 400px;
 
       .title {
         font-size: 44px;
         color: $white;
-        margin: 0 auto 60px auto;
+        margin: 0 auto 8% auto;
         text-align: center;
         font-weight: bold;
         text-shadow: 0 1px 18px rgba(0,51,153,0.4);
@@ -153,7 +153,8 @@ export default {
 
     .login-form {
       background-color: #fff;
-      padding: 60px 48px 46px;
+      // padding: 60px 48px 46px;
+      padding: 10% 8%;
       border-radius: 3px;
       // @include box-shadow(0 16px 59px 0 rgba(14,102,164,0.46));
 
@@ -196,6 +197,9 @@ export default {
         display: block;
         width: 100%;
         height: 100%;
+      }
+      .login-btn{
+        width: 100%;
       }
       .el-button{
         padding: 12px 15px;
