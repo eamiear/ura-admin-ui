@@ -7,6 +7,7 @@ import {
   SET_USER_INFO
 } from '../mutation-types'
 import UserAPI from '@/api/user'
+import Storage from '@/common/cache'
 
 const user = {
   state: {
