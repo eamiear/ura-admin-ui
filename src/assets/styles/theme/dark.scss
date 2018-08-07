@@ -27,10 +27,7 @@ $hover-item__background-color: transparent;
     .logo{
       font-size: 18px;
       color: $logo-color;
-      //background-color: #1E2C34;
-      //border-bottom: 2px solid #1C272D;
       background-color: $logo-background-color;
-      //box-shadow: 0 2px 20px 0 $logo-box-shadow-color;
       box-shadow: 0 0.5px 0 0 $logo-box-shadow-color
     }
     .brand:hover,
@@ -45,10 +42,6 @@ $hover-item__background-color: transparent;
 
   .main-content{
     .navbar{
-      //background-color: $navbar-background-color;
-      //@include box-shadow(0 -3px 8px 0 rgba(0, 0, 0, 0.44))
-      //@include box-shadow(0 2px 20px 0 $navbar-box-shadow-color);
-      // background-color: #ecf0f5;
       background-color: #fff;
     }
     .navbar .sidebar-toggle{
@@ -110,12 +103,6 @@ $hover-item__background-color: transparent;
     .label + .label{
       margin-right: 2px;
     }
-  }
-  // padding of menu item {level 1}
-  .el-menu-item, .el-submenu__title{
-  }
-  // padding of submenu item {level 2/3/4...}
-  .el-submenu .el-menu .el-menu-item{
   }
   .el-submenu .el-menu-item:hover, .el-submenu__title:hover{
     background-color: $hover-item__background-color;

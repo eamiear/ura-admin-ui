@@ -12,9 +12,6 @@ $form-item-margin-bottom: 18px !default;
 $form-item-height: 30px;
 $form-el-tag-height: 24px;
 
-// utopa/form
-$form-input-width: 416px;
-
 
 // Unit Size
 // --------------------------
@@ -130,23 +127,6 @@ $white : #fff !default;
 $btn-clear-color :      #555 !default;
 $btn-clear-bg :         $white !default;
 $btn-clear-border :     darken($white, 5%) !default;
-
-//$btn-royalblue-color:   #fff !default;
-//$btn-royalblue-bg:      $royalblue !default;
-//$btn-royalblue-border:  darken($btn-royalblue-bg, 5%) !default;
-//
-//$btn-dodgerblue-color:  #fff !default;
-//$btn-dodgerblue-bg:     $dodgerblue !default;
-//$btn-dodgerblue-border: darken($btn-dodgerblue-bg, 5%) !default;
-//
-//$btn-deepskyblue-color: #fff !default;
-//$btn-deepskyblue-bg:    $deepskyblue !default;
-//$btn-deepskyblue-border:darken($btn-deepskyblue-bg, 5%) !default;
-//
-//$btn-darkgray-color:    #fff !default;
-//$btn-darkgray-bg:       $darkgray !default;
-//$btn-darkgray-border:   darken($btn-darkgray-bg, 5%) !default;
-
 
 //Border radius for non flat buttons
 $btn-border-radius: 3px;
@@ -332,7 +312,6 @@ $single-bottom-line-color: #4CAF50;
 // Alert Box
 //--------------------------------------------------------
 $alert-box-width: 320px !default;
-
 
 $main-margin-left: 0;
 

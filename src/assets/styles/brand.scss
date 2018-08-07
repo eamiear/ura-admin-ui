@@ -12,11 +12,8 @@
   padding: 0 15px;
   font-weight: 300;
   overflow: hidden;
-  //Add support to sidebar mini by allowing the user to create
-  //2 logo designs. mini and lg
   .brand-lg,
   .logo-lg {
-    //should be visibile when sidebar isn't collapsed
     display: block;
   }
   .brand-mini,
@@ -25,7 +22,6 @@
   }
   .brand-image,.brand-label,
   .logo-image,.logo-label{
-    //display: table-cell;
     vertical-align: middle;
   }
   @media (max-width: $screen-sm) {
@@ -36,5 +32,3 @@
     }
   }
 }
-
-

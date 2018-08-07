@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <section class="form-container">
-      <h3 class="title">{{title[systemId]}}</h3>
+      <h3 class="title">{{title}}</h3>
       <el-form class="card-box login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
 
         <el-form-item prop="loginType">
@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import { SYSTEM_PLATFORM_CONFIG } from '@/common/constants'
-import * as verificationService from '@/api/common/verification'
+// import { SYSTEM_PLATFORM_CONFIG } from '@/common/constants'
+// import * as verificationService from '@/api/common/verification'
 
 export default {
   name: 'login',
@@ -68,7 +68,6 @@ export default {
     }
     return {
       backdrop: {
-        backgroundImage: 'url(' + require('@/assets/image/login/background_0.jpg') + ')',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         marginTop: '0'
@@ -85,8 +84,8 @@ export default {
         password: [{ required: true, trigger: 'blur', validator: validatePassword }],
         loginName: [{ required: true, trigger: 'blur', validator: validateLoginName }]
       },
-      title: SYSTEM_PLATFORM_CONFIG.systemName,
-      images: SYSTEM_PLATFORM_CONFIG.login_bg,
+      title: 'platform',
+      images: '',
       system: 0,
       pwdType: 'password',
       loading: false,
@@ -104,10 +103,6 @@ export default {
   computed: {
     'systemId' () {
       this.system = this.$route.query.sid || 0
-      if (!SYSTEM_PLATFORM_CONFIG.systemName[this.system]) {
-        this.system = 0
-      }
-      localStorage.setItem('systemId', this.system)
       return this.system
     }
   },
@@ -117,10 +112,10 @@ export default {
     },
     fetchVerifyCode () {
       const _this = this
-      verificationService.fetchVerifyCode().then(response => {
-        const result = response.data.data
-        _this.verifyCodeImage = result.verifyImage
-      })
+      // verificationService.fetchVerifyCode().then(response => {
+      //   const result = response.data.data
+      //   _this.verifyCodeImage = result.verifyImage
+      // })
     },
     handleLogin () {
       const _this = this
