@@ -1,8 +1,7 @@
 import axios from 'axios'
-import Constants from '@/common/constants'
 
 const service = axios.create({
-  baseURL: `${Constants.BASE_API}`,
+  baseURL: process.env.BASE_API,
   timeout: 16000
 })
 

@@ -22,7 +22,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: !devEnv.USE_PROXY ? {} : {
       '/proxyApi': {
-        target:  `${devEnv.PROXY_SERVER}:${devEnv.PROXY_PORT}`,
+        target:  devEnv.PROXY_SERVER,
         changeOrigin: true,
         pathRewrite: {
           '^/proxyApi': '/'
