@@ -45,11 +45,11 @@ const user = {
         UserAPI.loginByUsername(userInfo.username.trim(), userInfo.password).then((data) => {
           const loginRes = data.data
           if (data.code === 0) {
-            const accessToken = loginRes.accessToken
+            const token = loginRes.token
             const uid = loginRes.uid
-            Storage.set('token', accessToken)
+            Storage.set('token', token)
             Storage.set('uid', uid)
-            commit('SET_TOKEN', accessToken)
+            commit('SET_TOKEN', token)
             commit('SET_UID', uid)
           }
           resolve(data)
