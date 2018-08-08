@@ -1,6 +1,6 @@
 <template>
   <a href="#" class="brand">
-    <span class="brand-label" :style="styleObject">管理平台</span>
+    <span class="brand-label" :style="styleObject">系统管理平台</span>
   </a>
 </template>
 
