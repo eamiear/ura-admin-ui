@@ -47,7 +47,7 @@ export default {
     $route: 'routerHandler'
   },
   created () {
-    this.$store.dispatch('generatorSidebarMenu').then(() => {
+    this.$store.dispatch('generateSidebarMenu').then(() => {
       this.routerHandler(this.$route)
     })
   },
@@ -73,7 +73,7 @@ export default {
             }
             this.$store.dispatch('addTabsNavList', tab)
           } else {
-            // return console.error('没有可用tab标签页!')
+            return console.error('没有可用tab标签页!')
           }
         }
         this.menuNavActiveName = `${tab.id}`

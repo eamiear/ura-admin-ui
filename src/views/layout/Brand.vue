@@ -1,6 +1,6 @@
 <template>
   <a href="#" class="brand">
-    <span class="brand-label" :style="styleObject">代码生成器</span>
+    <span class="brand-label" :style="styleObject">管理平台</span>
   </a>
 </template>
 

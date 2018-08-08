@@ -17,9 +17,9 @@ const menu = {
     }
   },
   actions: {
-    generateSidebarMenus ({commit}) {
+    generateSidebarMenu ({commit}) {
       return new Promise(function(resolve, reject) {
-
+        resolve()
       })
     },
     updateMenuNavActiveName ({commit}, activeName) {

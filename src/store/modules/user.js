@@ -42,7 +42,7 @@ const user = {
   actions: {
     loginByUsername ({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
-        UserAPI.loginByUsername(userInfo.username.trim(), userInfo.password).then(({data}) => {
+        UserAPI.loginByUsername(userInfo.username.trim(), userInfo.password).then((data) => {
           const loginRes = data.data
           if (data.code === 0) {
             const accessToken = loginRes.accessToken
@@ -52,7 +52,7 @@ const user = {
             commit('SET_TOKEN', accessToken)
             commit('SET_UID', uid)
           }
-          resolve({data})
+          resolve(data)
         }).catch(error => {
           reject(error)
         })
@@ -62,7 +62,7 @@ const user = {
     // 获取用户信息
     getUserInfo ({ commit, state }) {
       return new Promise((resolve, reject) => {
-        UserAPI.getUserInfo(state.uid, state.token).then(({data}) => {
+        UserAPI.getUserInfo(state.uid, state.token).then((data) => {
           const userData = data.data
           if (data.code === 0) {
             commit('SET_USER_INFO', userData)
@@ -72,7 +72,7 @@ const user = {
           } else {
             console.log(data)
           }
-          resolve({data})
+          resolve(data)
         }).catch(error => {
           reject(error)
         })

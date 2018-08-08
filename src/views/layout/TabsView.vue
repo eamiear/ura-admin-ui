@@ -28,7 +28,7 @@
         </article>
       </el-tab-pane>
 
-      <el-dropdown class="tab-tools" @command="toolsCommandHandler" :show-timeout="0" trigger="click">
+      <el-dropdown v-if="isEmptyTabsNavList" class="tab-tools" @command="toolsCommandHandler" :show-timeout="0" trigger="click">
         <el-button type="primary">
           标签选项<i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
@@ -69,6 +69,9 @@ export default {
       'tabsNavList',
       'tabsActiveName'
     ]),
+    isEmptyTabsNavList () {
+      return !!this.tabsNavList.length
+    },
     tabActiveName: {
       get () {
         return this.tabsActiveName

@@ -21,6 +21,7 @@
 import Brand from '@/views/layout/Brand'
 import Navbar from '@/views/layout/Navbar'
 import Sidebar from '@/views/layout/Sidebar'
+import TabsView from '@/views/layout/TabsView'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -28,7 +29,8 @@ export default {
   components: {
     Brand,
     Navbar,
-    Sidebar
+    Sidebar,
+		TabsView
   },
   created () {
 		this.getUserInfo()
