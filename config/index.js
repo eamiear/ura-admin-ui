@@ -24,8 +24,9 @@ module.exports = {
       '/proxyApi': {
         target:  devEnv.PROXY_SERVER,
         changeOrigin: true,
+        secure: false,
         pathRewrite: {
-          '^/proxyApi': '/'
+          '^/proxyApi': ''
         }
       }
     },
