@@ -22,7 +22,7 @@
             v-model="loginForm.captcha"
             placeholder="验证码"
             @keyup.enter.native="handleLogin" />
-          <span class='captcha-code'><img @click="getCaptcha()" :src="capchatSource" /></span>
+          <span class='captcha-code'><img class="image" @click="getCaptcha()" :src="capchatSource" /></span>
         </el-form-item>
 
         <el-button type="primary" class="login-btn" :loading="loading" @click.native.prevent="handleLogin">登录</el-button>
@@ -34,7 +34,7 @@
 <script>
 // import { SYSTEM_PLATFORM_CONFIG } from '@/common/constants'
 // import * as verificationService from '@/api/common/verification'
-
+import SystemAPI from '@/api/system'
 export default {
   name: 'login',
   data () {
@@ -68,13 +68,14 @@ export default {
     }
   },
   created: function () {
-    this.capchatSource = this.getCaptcha()
+    this.getCaptcha()
   },
   methods: {
     showPwd () {
       this.pwdType = this.pwdType === 'password' ? 'text' : 'password'
     },
     getCaptcha () {
+      this.capchatSource = SystemAPI.getCaptcha()
       // const _this = this
       // verificationService.fetchVerifyCode().then(response => {
       //   const result = response.data.data
@@ -138,8 +139,8 @@ export default {
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translateX(-50%) translateY(-50%);
-      min-width: 400px;
+      transform: translateX(-50%) translateY(-60%);
+      min-width: 440px;
 
       .title {
         font-size: 44px;
@@ -159,7 +160,7 @@ export default {
       // @include box-shadow(0 16px 59px 0 rgba(14,102,164,0.46));
 
       .el-form-item {
-        width: 320px;
+        width: 360px;
         margin-bottom: 30px;
         background-color: transparent;
       }
@@ -183,10 +184,10 @@ export default {
         border-color: #20a0ff;
       }
       .captcha .el-input{
-        width: 82%;
+        width: 80%;
       }
       .captcha .captcha-code{
-        width: 18%;
+        width: 20%;
         height: 100%;
         position: absolute;
         right: 0;

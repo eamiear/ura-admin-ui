@@ -7,6 +7,7 @@ import {
   SET_USER_INFO
 } from '../mutation-types'
 import UserAPI from '@/api/user'
+import SystemAPI from '@/api/system'
 import Storage from '@/common/cache'
 
 const user = {
@@ -42,7 +43,7 @@ const user = {
   actions: {
     loginByUsername ({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
-        UserAPI.loginByUsername(userInfo.username.trim(), userInfo.password).then((data) => {
+        SystemAPI.login(userInfo.username.trim(), userInfo.password, userInfo.captcha.trim()).then((data) => {
           const loginRes = data.data
           if (data.code === 0) {
             const token = loginRes.token

@@ -18,4 +18,9 @@ service.interceptors.response.use(({data}) => {
   return Promise.reject(error)
 })
 
+service.getRequestUrl = (url) => {
+  const baseURL = process.env.BASE_API
+  return baseURL + url
+}
+
 export default service

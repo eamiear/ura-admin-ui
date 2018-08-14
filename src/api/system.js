@@ -1,0 +1,12 @@
+import service from '@/common/fetch'
+import {getRequestUrl} from '@/common'
+
+const SystemAPI = {
+  getCaptcha () {
+    return service.getRequestUrl('/captcha.jpg?t=' + Date.now())
+  },
+  login (username, password, captcha) {
+    return service.post(getRequestUrl('/sys/login'), {username, password, captcha})
+  }
+}
+export default SystemAPI
