@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <section class="form-container">
-      <h3 class="title">管理平台</h3>
+      <h3 class="title">ura admin</h3>
       <el-form class="card-box login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
         <el-form-item prop="username">
           <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="用户名" />
@@ -32,8 +32,6 @@
 </template>
 
 <script>
-// import { SYSTEM_PLATFORM_CONFIG } from '@/common/constants'
-// import * as verificationService from '@/api/common/verification'
 import SystemAPI from '@/api/system'
 export default {
   name: 'login',
@@ -76,11 +74,6 @@ export default {
     },
     getCaptcha () {
       this.capchatSource = SystemAPI.getCaptcha()
-      // const _this = this
-      // verificationService.fetchVerifyCode().then(response => {
-      //   const result = response.data.data
-      //   _this.verifyCodeImage = result.verifyImage
-      // })
     },
     handleLogin () {
       this.$refs.loginForm.validate(valid => {
@@ -100,6 +93,7 @@ export default {
             }
           }).catch((err) => {
             console.error(err)
+            this.getCaptcha()
             this.loading = false
           })
         } else {
@@ -125,6 +119,7 @@ export default {
     overflow: hidden;
 
     input:-webkit-autofill {
+      box-shadow: 0 0 0 1000px #fff inset !important;
       -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
     }
     input {
@@ -154,10 +149,8 @@ export default {
 
     .login-form {
       background-color: #fff;
-      // padding: 60px 48px 46px;
       padding: 10% 8%;
       border-radius: 3px;
-      // @include box-shadow(0 16px 59px 0 rgba(14,102,164,0.46));
 
       .el-form-item {
         width: 360px;
@@ -178,7 +171,7 @@ export default {
         border-radius: 4px;
         color: #999;
         font-weight: bold;
-        box-shadow: inset 0 0 3px 0 rgba(0,0,0,0.2);
+        // box-shadow: inset 0 0 3px 0 rgba(0,0,0,0.2);
       }
       .el-input .el-input__inner:focus{
         border-color: #20a0ff;

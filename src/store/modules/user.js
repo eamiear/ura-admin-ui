@@ -63,7 +63,7 @@ const user = {
     // 获取用户信息
     getUserInfo ({ commit, state }) {
       return new Promise((resolve, reject) => {
-        UserAPI.getUserInfo(state.uid, state.token).then((data) => {
+        UserAPI.getUserInfo(state.uid).then((data) => {
           const userData = data.data
           if (data.code === 0) {
             commit('SET_USER_INFO', userData)
@@ -83,7 +83,7 @@ const user = {
     // 登出
     logOut ({ commit, state }) {
       return new Promise((resolve, reject) => {
-        UserAPI.logout(state.token).then(() => {
+        SystemAPI.logout(state.token).then(() => {
           commit('SET_TOKEN', '')
           commit('SET_UID', '')
           commit('SET_USER_INFO', null)

@@ -30,6 +30,7 @@ module.exports = {
     "no-multiple-empty-lines": [2, { "max": 2 }],
     "no-trailing-spaces": [0],
     "no-tabs": ['off'],
+    "no-mixed-spaces-and-tabs": [0],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }

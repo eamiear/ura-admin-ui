@@ -11,11 +11,11 @@ export default [
     'name': '/401',
     'path': '/401',
     desc: '401',
-    'component': _import('errorPage/401')
+    'component': _import('error/401')
   }, {
     'name': '/404',
     'path': '/404',
     desc: '404页面',
-    'component': _import('errorPage/404')
+    'component': _import('error/404')
   }
 ]

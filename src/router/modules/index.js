@@ -4,8 +4,8 @@
  * 菜单配置出口
  *
  */
-// import system from './system'
-// import common from './common'
+import system from './system'
+import common from './common'
 import _import from '@/router/import'
 
 const menuRoutes = {
@@ -21,9 +21,9 @@ const menuRoutes = {
       desc: '首页面板',
       'component': _import('dashboard/index'),
       meta: {isTab: true}
-    }// ,
-    // ...system,
-    // ...common
+    },
+    ...system,
+    ...common
   ]
 }
 

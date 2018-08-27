@@ -1,4 +1,8 @@
 import { SET_MENU_NAV_LIST, SET_PERMISSIONS, UPDATE_MENU_NAV_ACTIVE_NAME } from '../mutation-types'
+
+// import Storage from '@/common/cache'
+import SysMenuAPI from '@/api/menu'
+
 const menu = {
   state: {
     menuNavActiveName: '',
@@ -19,7 +23,16 @@ const menu = {
   actions: {
     generateSidebarMenu ({commit}) {
       return new Promise(function(resolve, reject) {
-        resolve()
+        SysMenuAPI.getSysMenuList().then((res) => {
+          if (res.code === 0) {
+            commit('SET_MENU_NAV_LIST', res.data.menus)
+            commit('SET_PERMISSIONS', res.data.buttons)
+            resolve(res)
+          } else {
+            commit('SET_MENU_NAV_LIST', [])
+            commit('SET_PERMISSIONS', [])
+          }
+        })
       })
     },
     updateMenuNavActiveName ({commit}, activeName) {
