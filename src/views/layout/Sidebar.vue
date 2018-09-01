@@ -21,6 +21,7 @@ import SubMenuNav from './SubMenuNav.vue'
 import {mapGetters} from 'vuex'
 import isEmpty from 'lodash/isEmpty'
 import {hasPermission} from '@/common'
+import menuRouters from '@/router/modules'
 export default {
   data () {
     return {
@@ -61,7 +62,8 @@ export default {
       if (route.meta && route.meta.isTab) {
         let tab = this.tabsNavList.filter(tab => tab.name === route.name)[0]
         if (isEmpty(tab)) {
-          const menuNav = this.getMenuNavByRouteName(route.name, this.sidebarMenus)
+          // const menuNav = this.getMenuNavByRouteName(route.name, this.sidebarMenus)
+           const menuNav = this.getMenuNavByRouteName(route.path, menuRouters)
           if (!isEmpty(menuNav)) {
             tab = {
               id: menuNav.id,

@@ -8,7 +8,7 @@ import menuRouters from './modules'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: '/admin',
   scrollBehavior: () => ({ y: 0 }),
   routes: menuRouters

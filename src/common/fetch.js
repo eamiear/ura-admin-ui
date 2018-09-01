@@ -5,10 +5,7 @@ import Storage from '@/common/cache'
 const service = axios.create({
   baseURL: process.env.BASE_API,
   withCredentials: true,
-  timeout: 16000,
-  headers: {
-    'Content-Type': 'application/json; charset=utf-8'
-  }
+  timeout: 16000
 })
 
 service.interceptors.request.use(config => {
@@ -20,9 +17,9 @@ service.interceptors.request.use(config => {
 })
 
 service.interceptors.response.use(({data}) => {
-  if (data.code === 401) {
-    Storage.remove('token')
-  }
+  // if (data.code === 401 || data.code === 1001) {
+  //   Storage.remove('token')
+  // }
   return data
 }, error => {
   return Promise.reject(error)

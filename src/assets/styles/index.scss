@@ -8,6 +8,7 @@
 @import "element-ui/index";
 @import "theme/dark";
 @import "core";
+@import "../package/style/index";
 
 .site-wrapper {
   @include clearfix;
