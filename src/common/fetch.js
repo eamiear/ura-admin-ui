@@ -1,19 +1,28 @@
 import axios from 'axios'
 import QS from 'qs'
+import Storage from '@/common/cache'
 
 const service = axios.create({
   baseURL: process.env.BASE_API,
-  timeout: 16000
+  withCredentials: true,
+  timeout: 16000,
+  headers: {
+    'Content-Type': 'application/json; charset=utf-8'
+  }
 })
 
 service.interceptors.request.use(config => {
   // setHeader()
+  config.headers['token'] = Storage.get('token')
   return config
 }, error => {
   Promise.reject(error)
 })
 
 service.interceptors.response.use(({data}) => {
+  if (data.code === 401) {
+    Storage.remove('token')
+  }
   return data
 }, error => {
   return Promise.reject(error)

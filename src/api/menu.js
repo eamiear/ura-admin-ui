@@ -3,7 +3,7 @@ import service from '@/common/fetch'
 
 const SysMenuAPI = {
   getSysMenuList (params) {
-    return service.get('/sys/menu/list', {params})
+    return service.get('/sys/menu/list', params)
   }
 }
 export default SysMenuAPI

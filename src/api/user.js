@@ -3,9 +3,7 @@ import service from '@/common/fetch'
 
 const UserAPI = {
   getUserInfo (uid) {
-    return service.post('/sys/user/info', {
-      userId: uid
-    })
+    return service.get(`/sys/user/info/${uid}`)
   }
 }
 export default UserAPI
