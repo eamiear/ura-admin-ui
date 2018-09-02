@@ -67,7 +67,7 @@ const user = {
           const userData = data.data
           if (data.code === 0) {
             commit('SET_USER_INFO', userData)
-            commit('SET_NAME', userData.userName || userData.nickname)
+            commit('SET_NAME', userData.username || userData.nickname)
             commit('SET_AVATAR', userData.portrait)
             commit('SET_INTRODUCTION', userData.introduction)
           } else {

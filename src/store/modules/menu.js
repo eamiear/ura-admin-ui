@@ -26,7 +26,7 @@ const menu = {
         SysMenuAPI.getSysMenuList().then((res) => {
           if (res.code === 0) {
             commit('SET_MENU_NAV_LIST', res.data.menus)
-            commit('SET_PERMISSIONS', res.data.buttons)
+            commit('SET_PERMISSIONS', res.data.permissions)
             resolve(res)
           } else {
             commit('SET_MENU_NAV_LIST', [])

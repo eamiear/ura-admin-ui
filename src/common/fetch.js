@@ -1,6 +1,7 @@
 import axios from 'axios'
 import QS from 'qs'
 import Storage from '@/common/cache'
+import Router from '@/router'
 
 const service = axios.create({
   baseURL: process.env.BASE_API,
@@ -17,9 +18,10 @@ service.interceptors.request.use(config => {
 })
 
 service.interceptors.response.use(({data}) => {
-  // if (data.code === 401 || data.code === 1001) {
-  //   Storage.remove('token')
-  // }
+  if (data.code === 1002) { // invalid token
+    Storage.remove('token')
+    Router.push({path: '/login'})
+  }
   return data
 }, error => {
   return Promise.reject(error)
