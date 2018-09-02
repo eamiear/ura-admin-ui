@@ -7,9 +7,9 @@
       <el-form class="system-menu-wrapper"  ref="menuForm" :model="menuModel" label-width="90px" style='margin-left:50px;'>
         <el-form-item label="菜单类型" prop="type" :rules="{required: true, message: '选择菜单类型', trigger: 'blur'}">
           <el-radio-group v-model="menuModel.type" size="small" class="menu-item__width">
-            <el-radio label="0" border>目录</el-radio>
-            <el-radio label="1" border>菜单</el-radio>
-            <el-radio label="2" border>按钮</el-radio>
+            <el-radio :label="0" border>目录</el-radio>
+            <el-radio :label="1" border>菜单</el-radio>
+            <el-radio :label="2" border>按钮</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="菜单名称" prop="name" :rules="{required: true, message: '名称不能为空', trigger: 'blur'}">
@@ -126,39 +126,13 @@
         if (val === false) {
           this.$refs.menuForm.resetFields()
         }
-      },
-      parentNameId (newNode, oldNode) {
-        if (newNode && newNode.length) {
-          const parentNode = newNode[0]
-          if (parentNode.level) {
-            this.menuModel.level = parentNode.level + 1
-          }
-        }
       }
-    },
-    created () {
-      this.getList()
     },
     methods: {
       getParentNameList () {
         if (this.parentNameList.length) return this.parentNameList
         SysMenuAPI.getParentMenuList().then(res => {
           this.parentNameList = res.data.menus
-        })
-      },
-      // 查询
-      handleFilter () {
-        this.getList()
-      },
-      // 根据节点ID删除节点
-      delNodeById (dataSource, nId) {
-        dataSource.forEach((node, index) => {
-          if (node.id === nId) {
-            dataSource.splice(index, 1)
-            return false
-          } else if (node.children && node.children.length > 0) {
-            this.delNodeById(node.children, nId)
-          }
         })
       },
       resetMenuModel () {
@@ -176,32 +150,6 @@
           level: 1
         }
       },
-      // 重置查询列表
-      resetListQuery () {
-        this.listQuery = {
-          name: undefined,
-          code: undefined
-        }
-      },
-      // 点击刷新
-      handleRefresh () {
-        this.resetListQuery()
-        this.getList()
-      },
-      // 点击新增按钮
-      handleCreate (row, type) {
-        this.resetMenuModel()
-        if (type !== 'root') {
-          this.menuModel.parentId = row.id
-          this.menuModel.parentName = row.name
-          this.menuModel.level = row.level + 1
-          this.menuModel.sortOrder = row.children && row.children.length ? row.children.length + 1 : 1
-        }
-        this.isDisabled = true
-        this.isUniqueCodeDisabled = false
-        this.dialogStatus = 'create'
-        this.dialogFormVisible = true
-      },
       // 点击修改按钮
       handleUpdate (row) {
         this.menuModel = assign({}, row)
@@ -217,95 +165,6 @@
         SysMenuAPI.showMenu(row.id, val === 0 ? 0 : 1).then(response => {
           this.updateMenu()
         })
-      },
-      // 点击删除按钮
-      handleDelete (row) {
-        this.$confirm('即将删除该记录, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.remove(row.id).then((response) => {
-            if (response.code === 0) {
-              this.delNodeById(this.dataSource, row.id)
-              this.$message({
-                type: 'success',
-                message: response.data.msg || '删除成功!'
-              })
-              this.updateMenu()
-            } else {
-              this.$message({
-                type: 'error',
-                message: response.data.msg || '删除失败'
-              })
-            }
-          }).catch(() => {
-            this.$message({
-              type: 'error',
-              message: '删除失败'
-            })
-          })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
-        })
-      },
-      // 新增业务操作
-      create () {
-        SysMenuAPI.createMenu(this.menuModel).then((response) => {
-          if (response.code === 0) {
-            this.$message({
-              type: 'success',
-              message: '创建成功'
-            })
-            this.getList()
-            this.updateMenu()
-          } else {
-            this.$message({
-              type: 'error',
-              message: '创建失败'
-            })
-          }
-          this.dialogFormVisible = false
-        }).catch(() => {
-          this.$message({
-            type: 'error',
-            message: '服务出错'
-          })
-        })
-      },
-      // 编辑业务操作
-      update () {
-        this.menuModel.children = null
-        this.menuModel.parent = null
-        SysMenuAPI.editMenu(this.menuModel).then((response) => {
-          if (response.code === 0) {
-            this.$message({
-              type: 'success',
-              message: '编辑成功'
-            })
-            this.getList()
-            this.updateMenu()
-          } else {
-            this.$message({
-              type: 'error',
-              message: '编辑失败'
-            })
-          }
-          this.dialogFormVisible = false
-        }).catch((err) => {
-          this.$message({
-            type: 'error',
-            message: '编辑失败'
-          })
-          window.console && console.log('[menu-update]', err)
-        })
-      },
-      // 删除业务操作
-      remove (id) {
-        return SysMenuAPI.deleteMenu(id)
       },
       updateMenu () {
         this.$store.dispatch('generateSidebarMenu')
