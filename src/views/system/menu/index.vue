@@ -6,11 +6,6 @@
       <el-button class="filter-item" type="primary" icon="search" @click="handleFilter">搜索</el-button>
       <el-button class="filter-item" type="primary" icon="plus" @click="handleCreate(null, 'root')">新增</el-button>
       <el-button class="filter-item" type="primary" icon="el-icon-refresh" @click="handleRefresh">刷新</el-button>
-      <!--<el-checkbox-group v-model="tableHeader">-->
-        <!--<el-checkbox label="menuCode">菜单编码</el-checkbox>-->
-        <!--<el-checkbox label="permissionCode">权限编码</el-checkbox>-->
-        <!--<el-checkbox label="meta">附加属性</el-checkbox>-->
-      <!--</el-checkbox-group>-->
     </div>
     <table-tree
       class="area-code-container"
@@ -69,18 +64,15 @@
 
 <script>
   /* eslint-disable no-debugger */
-  import assign from 'lodash.assign'
   import SysMenuAPI from '@/api/menu'
   import Storage from '@/common/cache'
   import TableTree from '@/components/table-tree/TableTree'
-  import icons from '@/assets/package/icon'
 
   const rootMenu = 'root'
   export default {
     data () {
       return {
         listLoading: true,
-        parentNameId: [],
         listQuery: {
           name: undefined,
           code: undefined
@@ -98,9 +90,6 @@
           sortOrder: 0,
           level: 0
         },
-        isDisabled: false,
-        isUniqueCodeDisabled: false,
-        dialogFormVisible: false,
         dialogStatus: '',
         dialogTitleMap: {
           update: '编辑',
@@ -116,7 +105,6 @@
           },
           {
             text: '层级',
-//            width: '70px',
             dataIndex: 'level'
           },
           {
@@ -126,7 +114,6 @@
           },
           {
             text: '访问路径',
-//            width: '200px',
             align: 'left',
             style: 'link-type',
             dataIndex: 'path'
@@ -155,20 +142,15 @@
           },
           {
             text: '排序',
-//            width: '70px',
             dataIndex: 'sortOrder'
           },
           {
             text: '显示',
-//            width: '70px',
             mode: 'switcher',
             dataIndex: 'isShow'
           }
         ],
         treeData: [],
-        permissionIdModel: [],
-        tableHeader: [], // 'menuCode', 'meta', 'permissionCode'
-        tableHeaderOptions: ['menuCode', 'meta', 'permissionId'],
         dataSource: []
       }
     },
@@ -178,40 +160,9 @@
     computed: {
       isFolderMenu () {
         return this.menuModel.type === '0'
-      },
-      iconsArray () {
-        return icons
       }
     },
     watch: {
-      tableHeader (valArr) {
-        this.columns.forEach(i => {
-          if (valArr.indexOf(i.dataIndex) >= 0) {
-            i.display = i.display === 'hide' ? 'show' : 'hide'
-            return true
-          }
-        })
-        this.key = this.key + 1
-      },
-      dialogFormVisible (val) {
-        if (val === false) {
-          this.$refs.menuForm.resetFields()
-        }
-      },
-      permissionIdModel (val) {
-        this.menuModel.permissionId = ''
-        this.permissionIdModel.forEach((item) => {
-          this.menuModel.permissionId = item.id
-        })
-      },
-      parentNameId (newNode, oldNode) {
-        if (newNode && newNode.length) {
-          const parentNode = newNode[0]
-          if (parentNode.level) {
-            this.menuModel.level = parentNode.level + 1
-          }
-        }
-      }
     },
     created () {
       this.getList()
@@ -286,36 +237,6 @@
         this.resetListQuery()
         this.getList()
       },
-      // 点击新增按钮
-      handleCreate (row, type) {
-        this.resetMenuModel()
-        if (type !== 'root') {
-          this.menuModel.parentId = row.id
-          this.menuModel.parentName = row.name
-          this.menuModel.level = row.level + 1
-          this.menuModel.sortOrder = row.children && row.children.length ? row.children.length + 1 : 1
-        }
-        this.isDisabled = true
-        this.isUniqueCodeDisabled = false
-        this.dialogStatus = 'create'
-        this.dialogFormVisible = true
-      },
-      // 点击修改按钮
-      handleUpdate (row) {
-        this.menuModel = assign({}, row)
-        if (!this.menuModel.parentName) {
-          this.menuModel.parentName = rootMenu
-        }
-        this.dialogStatus = 'update'
-        this.isDisabled = row.parentId === null
-        this.isUniqueCodeDisabled = true
-        this.dialogFormVisible = true
-      },
-      handleSwitch (val, row) {
-        SysMenuAPI.showMenu(row.id, val === 0 ? 0 : 1).then(response => {
-          this.updateMenu()
-        })
-      },
       // 点击删除按钮
       handleDelete (row) {
         this.$confirm('即将删除该记录, 是否继续?', '提示', {
@@ -348,57 +269,6 @@
             type: 'info',
             message: '已取消删除'
           })
-        })
-      },
-      // 新增业务操作
-      create () {
-        SysMenuAPI.createMenu(this.menuModel).then((response) => {
-          if (response.code === 0) {
-            this.$message({
-              type: 'success',
-              message: '创建成功'
-            })
-            this.getList()
-            this.updateMenu()
-          } else {
-            this.$message({
-              type: 'error',
-              message: '创建失败'
-            })
-          }
-          this.dialogFormVisible = false
-        }).catch(() => {
-          this.$message({
-            type: 'error',
-            message: '服务出错'
-          })
-        })
-      },
-      // 编辑业务操作
-      update () {
-        this.menuModel.children = null
-        this.menuModel.parent = null
-        SysMenuAPI.editMenu(this.menuModel).then((response) => {
-          if (response.code === 0) {
-            this.$message({
-              type: 'success',
-              message: '编辑成功'
-            })
-            this.getList()
-            this.updateMenu()
-          } else {
-            this.$message({
-              type: 'error',
-              message: '编辑失败'
-            })
-          }
-          this.dialogFormVisible = false
-        }).catch((err) => {
-          this.$message({
-            type: 'error',
-            message: '编辑失败'
-          })
-          window.console && console.log('[menu-update]', err)
         })
       },
       // 删除业务操作

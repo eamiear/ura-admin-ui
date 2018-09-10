@@ -72,8 +72,9 @@
 <script>
   import assign from 'lodash.assign'
   import SysMenuAPI from '@/api/menu'
-  import Storage from '@/common/cache'
   import icons from '@/assets/package/icon'
+
+  const rootMenu = 'root'
   export default {
     data () {
       return {
@@ -101,9 +102,6 @@
         }
       }
     },
-    components: {
-      TableTree
-    },
     computed: {
       isCatalog () {
         return this.menuModel.type === 0
@@ -118,7 +116,7 @@
         return icons
       },
       dialogTitle () {
-        return dialogTitleMap[dialogStatus]
+        return this.dialogTitleMap[this.dialogStatus]
       }
     },
     watch: {
@@ -181,7 +179,7 @@
       menuListTreeSetCurrentNode () {
         this.$refs.menuListTree.setCurrentKey(this.menuModel.parentId)
         this.menuModel.parentName = (this.$refs.menuListTree.getCurrentNode() || {})['name']
-      },
+      }
     }
   }
 </script>
