@@ -21,7 +21,7 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .menu-container{
     padding: 10px;
     .filter-container{
@@ -171,7 +171,7 @@
       // 获取列表
       getList () {
         this.listLoading = true
-        SysMenuAPI.getSysMenuList(Storage.get('uid'), this.listQuery.name).then(response => {
+        SysMenuAPI.list(Storage.get('uid'), this.listQuery.name).then(response => {
           if (response.code === 0) {
             this.dataSource = response.data.menus
           } else {
@@ -231,6 +231,15 @@
           name: undefined,
           code: undefined
         }
+      },
+      handleCreate () {
+
+      },
+      handleUpdate () {
+
+      },
+      handleSwitch () {
+
       },
       // 点击刷新
       handleRefresh () {

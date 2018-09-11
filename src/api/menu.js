@@ -1,14 +1,14 @@
 import service from '@/common/fetch'
 
 const SysMenuAPI = {
-  getSysMenuList (params) {
+  list (params) {
     return service.get('/sys/menu/list', params)
   },
-  createMenu () {
+  save () {
     return service.get('/sys/menu/list')
   },
-  editMenu () {
-
+  info (menuId) {
+    return service.get(`/sys/menu/info/${menuId}`)
   },
   deleteMenu () {
 
@@ -16,8 +16,8 @@ const SysMenuAPI = {
   showMenu () {
 
   },
-  getParentMenuList () {
-
+  select () {
+    return service.get('/sys/menu/select')
   }
 }
 export default SysMenuAPI

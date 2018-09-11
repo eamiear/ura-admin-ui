@@ -31,7 +31,7 @@ const system = [
     'name': '/system/menu.html',
     'path': '/system/menu',
     desc: '菜单管理',
-    'component': _import('system/menu'),
+    'component': _import('system/menu/index'),
     'meta': {isTab: true},
     'labels': "[{classes: 'bg-red',text: '5'}]"
   }, {

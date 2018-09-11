@@ -4,7 +4,14 @@
     :visible.sync="dialogFormVisible"
     :close-on-click-modal="false"
      @close="dialogClosed">
-      <el-form class="system-menu-wrapper"  ref="menuForm" :model="menuModel" label-width="90px" style='margin-left:50px;'>
+      <el-form
+        class="system-menu-wrapper"
+        ref="menuForm"
+        :model="menuModel"
+        label-width="90px"
+        style='margin-left:50px;'
+        @keyup.enter.native="submit">
+
         <el-form-item label="菜单类型" prop="type" :rules="{required: true, message: '选择菜单类型', trigger: 'blur'}">
           <el-radio-group v-model="menuModel.type" size="small" class="menu-item__width">
             <el-radio :label="0" border>目录</el-radio>
@@ -64,17 +71,17 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="update">确 定</el-button>
+        <el-button type="primary" @click="submit">确 定</el-button>
       </div>
     </el-dialog>
 </template>
 
 <script>
-  import assign from 'lodash.assign'
+  // import assign from 'lodash.assign'
   import SysMenuAPI from '@/api/menu'
   import icons from '@/assets/package/icon'
 
-  const rootMenu = 'root'
+  // const rootMenu = 'root'
   export default {
     data () {
       return {
@@ -127,6 +134,12 @@
       }
     },
     methods: {
+      init (id) {
+        this.menuModel.id = id || 0
+        SysMenuAPI.select().then(response => {
+
+        })
+      },
       getParentNameList () {
         if (this.parentNameList.length) return this.parentNameList
         SysMenuAPI.getParentMenuList().then(res => {
@@ -148,17 +161,6 @@
           level: 1
         }
       },
-      // 点击修改按钮
-      handleUpdate (row) {
-        this.menuModel = assign({}, row)
-        if (!this.menuModel.parentName) {
-          this.menuModel.parentName = rootMenu
-        }
-        this.dialogStatus = 'update'
-        this.isDisabled = row.parentId === null
-        this.isUniqueCodeDisabled = true
-        this.dialogFormVisible = true
-      },
       handleSwitch (val, row) {
         SysMenuAPI.showMenu(row.id, val === 0 ? 0 : 1).then(response => {
           this.updateMenu()
@@ -172,13 +174,20 @@
       },
       // 菜单树选中
       menuListTreeCurrentChangeHandle (data, node) {
-        this.dataFmenuModelorm.parentId = data.menuId
+        this.menuModel.parentId = data.menuId
         this.menuModel.parentName = data.name
       },
       // 菜单树设置当前选中节点
       menuListTreeSetCurrentNode () {
         this.$refs.menuListTree.setCurrentKey(this.menuModel.parentId)
         this.menuModel.parentName = (this.$refs.menuListTree.getCurrentNode() || {})['name']
+      },
+      submit () {
+        this.$refs['menuForm'].validate(valid => {
+          if (valid) {
+
+          }
+        })
       }
     }
   }
