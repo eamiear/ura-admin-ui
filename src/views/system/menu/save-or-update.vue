@@ -137,7 +137,7 @@
       init (id) {
         this.menuModel.id = id || 0
         SysMenuAPI.select().then(response => {
-
+          // this.menuList =
         })
       },
       getParentNameList () {
