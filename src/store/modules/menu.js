@@ -23,7 +23,7 @@ const menu = {
   actions: {
     generateSidebarMenu ({commit}) {
       return new Promise(function(resolve, reject) {
-        SysMenuAPI.getSysMenuList().then((res) => {
+        SysMenuAPI.list().then((res) => {
           if (res.code === 0) {
             commit('SET_MENU_NAV_LIST', res.data.menus)
             commit('SET_PERMISSIONS', res.data.permissions)

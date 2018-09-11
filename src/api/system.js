@@ -6,7 +6,13 @@ const SystemAPI = {
     return service.getRequestUrl('/captcha.jpg?t=' + Date.now())
   },
   login (username, password, captcha) {
-    return service.post('/sys/login', {username, password, captcha}, true)
+    return service.post({
+      url: '/sys/login',
+      data: {username, password, captcha}
+    })
+  },
+  logout () {
+    return service.get('/sys/logout')
   }
 }
 export default SystemAPI

@@ -1,5 +1,7 @@
 <template>
-  <el-dialog top="10%"
+  <el-dialog
+    top="10%"
+    width="50%"
     :title="dialogTitleMap[dialogStatus]" drag
     :visible.sync="dialogFormVisible"
     :close-on-click-modal="false"
@@ -40,8 +42,8 @@
           </el-popover>
           <el-input v-model="menuModel.parentName" v-popover:menuListPopover :readonly="true" placeholder="点击选择上级菜单" class="menu-list__input"></el-input>
         </el-form-item>
-        <el-form-item v-if="!isCatalog" label="访问路径">
-          <el-input v-model="menuModel.path" placeholder="菜单URL"></el-input>
+        <el-form-item v-if="!isCatalog" label="访问路径" :rules="{required: true, message: '菜单URL不能为空', trigger: 'blur'}">
+          <el-input v-model="menuModel.url" placeholder="菜单URL"></el-input>
           <span class="menu-tips">如：/system/menu.html</span>
         </el-form-item>
         <el-form-item v-if="!isCatalog" label="授权标识" prop="perms">
@@ -63,10 +65,10 @@
         </el-form-item>
 
         <el-form-item label="排序" v-if="!isButton">
-          <el-input v-model="menuModel.sortOrder"></el-input>
+          <el-input v-model="menuModel.orders"></el-input>
         </el-form-item>
         <el-form-item label="显示" v-if="!isButton">
-          <el-switch v-model="menuModel.isShow" :active-value="1" :inactive-value="0" active-text="" inactive-text="" > </el-switch>
+          <el-switch v-model="menuModel.status" :active-value="1" :inactive-value="0" active-text="" inactive-text="" > </el-switch>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -77,24 +79,24 @@
 </template>
 
 <script>
-  // import assign from 'lodash.assign'
+  import assign from 'lodash.assign'
   import SysMenuAPI from '@/api/menu'
   import icons from '@/assets/package/icon'
+  import { treeDataTranslate } from '@/common'
 
   // const rootMenu = 'root'
   export default {
     data () {
       return {
         menuModel: {
-          id: undefined,
-          type: '1',
-          path: '',
+          menuId: undefined,
+          type: 0,
+          url: '',
           parentId: null,
           parentName: '',
-          isShow: 1,
+          status: 1,
           icon: '',
-          image: '',
-          sortOrder: 0,
+          orders: 0,
           level: 0
         },
         dialogFormVisible: false,
@@ -122,6 +124,9 @@
       iconsArray () {
         return icons
       },
+      dialogStatus () {
+        return this.menuModel.menuId ? 0 : 1
+      },
       dialogTitle () {
         return this.dialogTitleMap[this.dialogStatus]
       }
@@ -135,29 +140,36 @@
     },
     methods: {
       init (id) {
-        this.menuModel.id = id || 0
+        this.menuModel.menuId = id || 0
         SysMenuAPI.select().then(response => {
-          // this.menuList =
-        })
-      },
-      getParentNameList () {
-        if (this.parentNameList.length) return this.parentNameList
-        SysMenuAPI.getParentMenuList().then(res => {
-          this.parentNameList = res.data.menus
+          this.menuList = treeDataTranslate(response.data.menus, 'menuId')
+        }).then(() => {
+          this.dialogFormVisible = true
+          this.$nextTick(() => {
+            this.$refs['menuForm'].resetFields()
+          })
+        }).then(() => {
+          if (!this.menuModel.menuId) {
+            this.menuListTreeSetCurrentNode()
+          } else {
+            SysMenuAPI.info(this.menuModel.menuId).then(response => {
+                assign(this.menuModel, response.data)
+                this.menuListTreeSetCurrentNode()
+            })
+          }
         })
       },
       resetMenuModel () {
         this.menuModel = {
-          id: undefined,
+          menuId: undefined,
           type: '0',
-          path: '',
+          url: '',
           parentId: null,
           parentName: '',
           permissionId: '',
-          isShow: 1,
+          status: 1,
           icon: '',
-          image: '',
-          sortOrder: 0,
+          orders: 0,
           level: 1
         }
       },
@@ -185,7 +197,21 @@
       submit () {
         this.$refs['menuForm'].validate(valid => {
           if (valid) {
-
+            const tick = !this.menuModel.menuId ? SysMenuAPI.create(this.menuModel) : SysMenuAPI.update(this.menuModel)
+            tick.then(response => {
+              if (response.code === 0) {
+                this.$message({
+                  type: 'success',
+                  message: '操作成功',
+                  onClose: () => {
+                    this.dialogFormVisible = false
+                    this.$emit('table-refresh')
+                  }
+                })
+              } else {
+                this.$message.error(response.msg)
+              }
+            })
           }
         })
       }

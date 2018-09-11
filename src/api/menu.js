@@ -4,8 +4,15 @@ const SysMenuAPI = {
   list (params) {
     return service.get('/sys/menu/list', params)
   },
-  save () {
-    return service.get('/sys/menu/list')
+  create (params) {
+    return service.post({
+      url: '/sys/menu/save',
+      data: params,
+      json: true
+    })
+  },
+  update (params) {
+    return service.post('/sys/menu/update', params)
   },
   info (menuId) {
     return service.get(`/sys/menu/info/${menuId}`)

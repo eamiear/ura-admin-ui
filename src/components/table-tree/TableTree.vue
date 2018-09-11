@@ -26,7 +26,7 @@
           <span v-else-if="index===0" class="space"></span>
 
           <div v-if="column.mode === 'switcher'">
-            <el-switch v-model="scope.row[column.dataIndex]" :on-value="1" :off-value="0" on-text="" off-text="" @click.native="emitChange(scope.row[column.dataIndex], scope.row)"> </el-switch>
+            <el-switch v-model="scope.row[column.dataIndex]" :active-value="1" :inactive-value="0" active-text="" inactive-text="" @click.native="emitChange(scope.row[column.dataIndex], scope.row)"> </el-switch>
             <!--<multiSwitch :extra="scope.row" :model="scope.row[column.dataIndex]" :onValue="1" :offValue="0" :onText="" :offText="" @onChange="emitChange"></multiSwitch>-->
           </div>
           <div v-else-if="column.mode === 'icon'">

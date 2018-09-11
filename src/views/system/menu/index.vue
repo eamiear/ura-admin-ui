@@ -4,7 +4,7 @@
       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="菜单名称" v-model="listQuery.name"></el-input>
 
       <el-button class="filter-item" type="primary" icon="search" @click="handleFilter">搜索</el-button>
-      <el-button class="filter-item" type="primary" icon="plus" @click="handleCreate(null, 'root')">新增</el-button>
+      <el-button class="filter-item" type="primary" icon="plus" @click="createOrUpdateHandle()">新增</el-button>
       <el-button class="filter-item" type="primary" icon="el-icon-refresh" @click="handleRefresh">刷新</el-button>
     </div>
     <table-tree
@@ -13,11 +13,13 @@
       :columns="columns"
       :tree-structure="true"
       :data-source="dataSource"
-      @create="handleCreate"
-      @update="handleUpdate"
+      @create="createOrUpdateHandle"
+      @update="createOrUpdateHandle"
       @delete="handleDelete"
       @switchChange="handleSwitch"
     ></table-tree>
+
+    <add-or-update v-if="dialogVisible" ref="addOrUpdate" @table-refresh="getList"></add-or-update>
   </div>
 </template>
 
@@ -67,12 +69,14 @@
   import SysMenuAPI from '@/api/menu'
   import Storage from '@/common/cache'
   import TableTree from '@/components/table-tree/TableTree'
+  import AddOrUpdate from './save-or-update'
 
   const rootMenu = 'root'
   export default {
     data () {
       return {
         listLoading: true,
+        dialogVisible: false,
         listQuery: {
           name: undefined,
           code: undefined
@@ -90,12 +94,6 @@
           sortOrder: 0,
           level: 0
         },
-        dialogStatus: '',
-        dialogTitleMap: {
-          update: '编辑',
-          create: '新增'
-        },
-        parentNameList: [],
         columns: [
           {
             text: '菜单名称',
@@ -150,12 +148,12 @@
             dataIndex: 'isShow'
           }
         ],
-        treeData: [],
         dataSource: []
       }
     },
     components: {
-      TableTree
+      TableTree,
+      AddOrUpdate
     },
     computed: {
       isFolderMenu () {
@@ -187,12 +185,6 @@
               message: err.message || '程序出错'
             })
           this.listLoading = false
-        })
-      },
-      getParentNameList () {
-        if (this.parentNameList.length) return this.parentNameList
-        SysMenuAPI.getParentMenuList().then(res => {
-          this.parentNameList = res.data.menus
         })
       },
       // 查询
@@ -232,11 +224,11 @@
           code: undefined
         }
       },
-      handleCreate () {
-
-      },
-      handleUpdate () {
-
+      createOrUpdateHandle (row) {
+        this.dialogVisible = true
+        this.$nextTick(() => {
+          this.$refs['addOrUpdate'].init(row && row.id)
+        })
       },
       handleSwitch () {
 
