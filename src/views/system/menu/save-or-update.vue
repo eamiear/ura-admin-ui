@@ -90,6 +90,7 @@
       return {
         menuModel: {
           menuId: undefined,
+          name: '',
           type: 0,
           url: '',
           parentId: null,
@@ -141,20 +142,21 @@
     methods: {
       init (id) {
         this.menuModel.menuId = id || 0
+        const _this = this
         SysMenuAPI.select().then(response => {
-          this.menuList = treeDataTranslate(response.data.menus, 'menuId')
+          _this.menuList = treeDataTranslate(response.data.menus, 'menuId')
         }).then(() => {
-          this.dialogFormVisible = true
-          this.$nextTick(() => {
-            this.$refs['menuForm'].resetFields()
+          _this.dialogFormVisible = true
+          _this.$nextTick(() => {
+            _this.$refs['menuForm'].resetFields()
           })
         }).then(() => {
-          if (!this.menuModel.menuId) {
-            this.menuListTreeSetCurrentNode()
+          if (!_this.menuModel.menuId) {
+            _this.menuListTreeSetCurrentNode()
           } else {
-            SysMenuAPI.info(this.menuModel.menuId).then(response => {
-                assign(this.menuModel, response.data)
-                this.menuListTreeSetCurrentNode()
+            SysMenuAPI.info(_this.menuModel.menuId).then(response => {
+                assign(_this.menuModel, response.data)
+                _this.menuListTreeSetCurrentNode()
             })
           }
         })
@@ -162,11 +164,11 @@
       resetMenuModel () {
         this.menuModel = {
           menuId: undefined,
+          name: '',
           type: '0',
           url: '',
           parentId: null,
           parentName: '',
-          permissionId: '',
           status: 1,
           icon: '',
           orders: 0,
@@ -203,8 +205,10 @@
                 this.$message({
                   type: 'success',
                   message: '操作成功',
+                  duration: 1000,
                   onClose: () => {
                     this.dialogFormVisible = false
+                    this.updateMenu()
                     this.$emit('table-refresh')
                   }
                 })

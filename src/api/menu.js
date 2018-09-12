@@ -12,7 +12,11 @@ const SysMenuAPI = {
     })
   },
   update (params) {
-    return service.post('/sys/menu/update', params)
+    return service.post({
+      url: '/sys/menu/update',
+      data: params,
+      json: true
+    })
   },
   info (menuId) {
     return service.get(`/sys/menu/info/${menuId}`)

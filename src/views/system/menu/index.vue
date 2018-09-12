@@ -13,7 +13,7 @@
       :columns="columns"
       :tree-structure="true"
       :data-source="dataSource"
-      @create="createOrUpdateHandle"
+      @create="createOrUpdateHandle()"
       @update="createOrUpdateHandle"
       @delete="handleDelete"
       @switchChange="handleSwitch"
@@ -70,6 +70,7 @@
   import Storage from '@/common/cache'
   import TableTree from '@/components/table-tree/TableTree'
   import AddOrUpdate from './save-or-update'
+  import {treeDataTranslate} from '@/common'
 
   const rootMenu = 'root'
   export default {
@@ -106,15 +107,15 @@
             dataIndex: 'level'
           },
           {
-            text: '菜单编码',
+            text: '菜单类型',
             display: 'hide',
-            dataIndex: 'menuCode'
+            dataIndex: 'type'
           },
           {
             text: '访问路径',
             align: 'left',
             style: 'link-type',
-            dataIndex: 'path'
+            dataIndex: 'url'
           },
           {
             text: '菜单图标',
@@ -140,12 +141,12 @@
           },
           {
             text: '排序',
-            dataIndex: 'sortOrder'
+            dataIndex: 'orders'
           },
           {
             text: '显示',
             mode: 'switcher',
-            dataIndex: 'isShow'
+            dataIndex: 'status'
           }
         ],
         dataSource: []
@@ -171,7 +172,7 @@
         this.listLoading = true
         SysMenuAPI.list(Storage.get('uid'), this.listQuery.name).then(response => {
           if (response.code === 0) {
-            this.dataSource = response.data.menus
+            this.dataSource = treeDataTranslate(response.data.menus, 'menuId')
           } else {
             this.$message({
               type: 'error',
@@ -227,7 +228,7 @@
       createOrUpdateHandle (row) {
         this.dialogVisible = true
         this.$nextTick(() => {
-          this.$refs['addOrUpdate'].init(row && row.id)
+          this.$refs['addOrUpdate'].init(row && row.menuId)
         })
       },
       handleSwitch () {

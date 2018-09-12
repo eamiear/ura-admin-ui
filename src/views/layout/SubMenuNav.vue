@@ -21,7 +21,7 @@
     :index="menus.id + ''"
     class='single-item'
     v-else-if="menus.isShow && (!menus.children || (menus.children && menus.children.length === 0))"
-    @click="routerHandler(menus.path, $route)">
+    @click="routerHandler(menus.url, $route)">
     <v-image v-if="menus.image" :source="menus.image" />
     <icon v-else-if='menus.icon' :name="menus.icon"></icon>
     <span slot="title" class="el-menu-item-title">{{menus.name}}</span>

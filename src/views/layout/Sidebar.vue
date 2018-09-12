@@ -8,7 +8,7 @@
       :default-active="menuNavActiveName"
       :collapse="sidebarCollapse">
       <sub-menu-nav
-        v-for="menu in sidebarMenus"
+        v-for="menu in sidebarTreeMenus"
         :key="menu.id"
         :menus='menu'>
       </sub-menu-nav>
@@ -20,8 +20,8 @@
 import SubMenuNav from './SubMenuNav.vue'
 import {mapGetters} from 'vuex'
 import isEmpty from 'lodash/isEmpty'
-import {hasPermission} from '@/common'
-import menuRouters from '@/router/modules'
+import {hasPermission, treeDataTranslate} from '@/common'
+// import menuRouters from '@/router/modules'
 export default {
   data () {
     return {
@@ -42,6 +42,9 @@ export default {
       set (name) {
         this.$store.dispatch('updateMenuNavActiveName', name)
       }
+    },
+    sidebarTreeMenus () {
+      return treeDataTranslate(this.sidebarMenus, 'menuId')
     }
   },
   watch: {
@@ -62,8 +65,8 @@ export default {
       if (route.meta && route.meta.isTab) {
         let tab = this.tabsNavList.filter(tab => tab.name === route.name)[0]
         if (isEmpty(tab)) {
-          // const menuNav = this.getMenuNavByRouteName(route.name, this.sidebarMenus)
-           const menuNav = this.getMenuNavByRouteName(route.path, menuRouters)
+          const menuNav = this.getMenuNavByRouteName(route.name, this.sidebarTreeMenus)
+          //  const menuNav = this.getMenuNavByRouteName(route.path, menuRouters)
           if (!isEmpty(menuNav)) {
             tab = {
               id: menuNav.id,
@@ -87,7 +90,7 @@ export default {
       for (let i = 0; i < menuNavList.length; i++) {
         if (menuNavList[i].children && menuNavList[i].children.length >= 1) {
           temp = temp.concat(menuNavList[i].children)
-        } else if (menuNavList[i].path === routeName) {
+        } else if (menuNavList[i].url === routeName) {
           return menuNavList[i]
         }
       }

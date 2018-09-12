@@ -38,9 +38,9 @@
       <el-table-column label="操作" align="center" header-align="center" v-if="treeType === 'normal'" width="200px">
         <template slot-scope="scope">
           <slot>
-            <el-button type="default" size="small" @click="emitCreate(scope.row)">新增</el-button>
-            <el-button type="success" size="small" @click="emitUpdate(scope.row)">编辑</el-button>
-            <el-button type="danger" size="small"  @click="emitDelete(scope.row)">删除</el-button>
+            <el-button type="default" circle size="small" icon="el-icon-plus" @click="emitCreate(scope.row)" title="新增"></el-button>
+            <el-button type="success" circle size="small" icon="el-icon-edit" @click="emitUpdate(scope.row)" title="编辑"></el-button>
+            <el-button type="danger" circle size="small"  icon="el-icon-delete" @click="emitDelete(scope.row)" title="删除"></el-button>
           </slot>
         </template>
       </el-table-column>
@@ -49,33 +49,45 @@
 </template>
 
 <script>
-  const transferToTreeArray = (data, parent, isOpen) => {
+import Icon from '@/assets/package/icon'
+import Vue from 'vue'
+  const transferToTreeArray = (data, parent, level, isOpen) => {
     let tmp = []
     Array.from(data).forEach(function (node) {
       if (!node.open) {
-        // Vue.set(node, 'open', isOpen)
-        node.open = isOpen
+        Vue.set(node, 'open', isOpen)
+        // node.open = isOpen
       }
       if (parent) {
-        // Vue.set(node, 'parent', parent)
-        // Vue.set(node, 'pId', parent.id)
-        // Vue.set(node, 'parentId', parent.id)
-        // Vue.set(node, 'parentName', parent.name)
-        node.parent = parent
-        node.pId = parent.id
-        node.parentId = parent.id
-        node.parentName = parent.name
+        Vue.set(node, 'parent', parent)
+        Vue.set(node, 'pId', parent.id)
+        Vue.set(node, 'parentId', parent.id)
+        Vue.set(node, 'parentName', parent.name)
+      //   node.parent = parent
+      //   node.pId = parent.id
+      //   node.parentId = parent.id
+      //   node.parentName = parent.name
       }
-      // Vue.set(node, 'isParent', node.children && node.children.length > 0)
-      node.isParent = node.children && node.children.length > 0
+
+       let _level = 0
+      if (node.level) {
+        _level = node.level
+      } else if (level !== undefined && level !== null) {
+        _level = level + 1
+      }
+      // node.level = _level
+      Vue.set(node, 'level', _level)
+      Vue.set(node, 'isParent', node.children && node.children.length > 0)
+      // node.isParent = node.children && node.children.length > 0
       tmp.push(node)
       if (node.children && node.children.length > 0) {
-        let children = transferToTreeArray(node.children, node, isOpen)
+        let children = transferToTreeArray(node.children, node, _level, isOpen)
         tmp = tmp.concat(children)
       }
     })
     return tmp
   }
+
   export default {
     name: 'table-tree',
     props: {
@@ -125,6 +137,7 @@
         mode: ''
       }
     },
+    components: {Icon},
     computed: {
       data: function () { // 格式化数据源
         if (this.treeStructure) {
@@ -159,7 +172,7 @@
         return tmp
       },
       // 显示行
-      showRow: function (row, index) {
+      showRow: function ({row, index}) {
         let show = (row.parent ? (row.parent.open && row.parent.show) : true)
         row.show = show
         return show ? '' : 'display:none;'
