@@ -9,7 +9,7 @@
       :collapse="sidebarCollapse">
       <sub-menu-nav
         v-for="menu in sidebarTreeMenus"
-        :key="menu.id"
+        :key="menu.menuId"
         :menus='menu'>
       </sub-menu-nav>
     </el-menu>
@@ -69,7 +69,7 @@ export default {
           //  const menuNav = this.getMenuNavByRouteName(route.path, menuRouters)
           if (!isEmpty(menuNav)) {
             tab = {
-              id: menuNav.id,
+              id: menuNav.menuId,
               name: route.name,
               title: menuNav.name,
               type: route.meta.type,

@@ -1,7 +1,7 @@
 <template>
   <el-submenu
     v-if="menus.isShow && menus.children && menus.children.length > 0"
-    :index="menus.id + ''">
+    :index="menus.menuId + ''">
     <template slot="title">
       <v-image v-if="menus.image" :source="menus.image"></v-image>
       <icon v-else-if='menus.icon' :name="menus.icon"></icon>
@@ -14,11 +14,11 @@
     </template>
     <sub-menu-nav
       v-for="item in menus.children"
-      :key="item.id"
+      :key="item.menuId"
       :menus="item"></sub-menu-nav>
   </el-submenu>
   <el-menu-item
-    :index="menus.id + ''"
+    :index="menus.menuId + ''"
     class='single-item'
     v-else-if="menus.isShow && (!menus.children || (menus.children && menus.children.length === 0))"
     @click="routerHandler(menus.url, $route)">
